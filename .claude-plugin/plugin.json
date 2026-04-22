@@ -1,0 +1,10 @@
+{
+  "name": "connect0459-agent-skills",
+  "description": "Claude Code skills for connect0459",
+  "version": "1.0.0",
+  "author": {
+    "name": "connect0459"
+  },
+  "repository": "https://github.com/connect0459/connect0459-agent-skills",
+  "license": "MIT"
+}

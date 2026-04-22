@@ -1,0 +1,16 @@
+{
+  "name": "connect0459",
+  "owner": {
+    "name": "connect0459"
+  },
+  "plugins": [
+    {
+      "name": "connect0459-agent-skills",
+      "source": {
+        "source": "github",
+        "repo": "connect0459/connect0459-agent-skills"
+      },
+      "description": "Claude Code skills by connect0459"
+    }
+  ]
+}
