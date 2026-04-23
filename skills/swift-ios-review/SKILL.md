@@ -149,6 +149,57 @@ deinit {
 - **MVVM**: VC が ViewModel を購読しているか（binding / Combine / RxSwift など）。VC が直接ビジネスロジックを持っていないか
 - **TCA**: VC / View が `store.send(_:)` を通じてのみアクションを発行しているか
 
+### MVVM における単方向データフロー（UDF-style）の確認
+
+SwiftUI + MVVM で View が ViewModel の状態を直接書き換えられない構造になっているかを確認する。
+
+確認ポイント：
+
+- `@Published` プロパティに `private(set)` が付いているか
+  - 付いていない場合、View が `$viewModel.property` 経由でビジネス状態を直接変更できる
+- View から ViewModel への状態変更がメソッド呼び出し（アクション）経由になっているか
+- UIKit ブリッジ用コールバック（`onRequestDismiss` など）はアーキテクチャ境界での外部連携手段であり、ViewModel 内部の状態フローとは別に扱われているか
+
+```swift
+// Bad: private(set) がなく、View からの入力で ViewModel の状態が直接書き換わる
+class SomeViewModel: ObservableObject {
+    @Published var query: String = ""
+}
+// View 側: TextField("検索", text: $viewModel.query)
+// → ユーザー入力のたびに View から viewModel.query へ直接代入される
+
+// Good: 状態は read-only、変更はアクションメソッド経由
+class SomeViewModel: ObservableObject {
+    @Published private(set) var query: String = ""
+
+    func didChangeQuery(_ text: String) {
+        query = text
+        // バリデーションや副作用をここで管理できる
+    }
+}
+```
+
+**例外: SwiftUI の dismiss 操作が必要な sheet 管理プロパティ**
+
+`.sheet(item:)` や `.sheet(isPresented:)` は SwiftUI が dismiss 時にバインディングへ書き戻す（`nil` / `false` にする）ため、`private(set)` と両立しない。意図的な例外として許容するか、`Binding` ラッパーでアクションに委譲する。
+
+```swift
+// 許容: SwiftUI の dismiss 書き戻しのために private(set) を外している（意図的な例外）
+@Published var activeSheet: SheetType? = nil
+// View 側: .sheet(item: $viewModel.activeSheet) { ... }
+
+// より厳密にする場合: カスタム Binding でアクションに委譲
+@Published private(set) var activeSheet: SheetType? = nil
+func dismissSheet() { activeSheet = nil }
+
+// View 側:
+let sheetBinding = Binding<SheetType?>(
+    get: { viewModel.activeSheet },
+    set: { _ in viewModel.dismissSheet() }
+)
+.sheet(item: sheetBinding) { ... }
+```
+
 ### ViewController の責務
 
 - VC がビジネスロジックを直接持っていないか（API 呼び出し、データ変換など）
