@@ -103,7 +103,7 @@ deinit {
 
 ### UIKit / WebKit 操作はメインスレッドで行われているか
 
-特定のクラスがバックグラウンドのシリアルキュー上でトークン更新完了通知を送信する仕組みを採用している場合、通知ハンドラ `didAccessTokenRefreshedByAPIAccess` 内の UI 操作はバックグラウンドスレッドで呼ばれる可能性がある。
+バックグラウンドスレッド（シリアルキュー等）上で処理が完了してから通知を送信する仕組みを採用している場合、通知ハンドラ内の UI 操作はバックグラウンドスレッドで呼ばれる可能性がある。
 
 確認ポイント：
 
@@ -112,17 +112,17 @@ deinit {
 - `[weak self]` を忘れずに付けているか（メモリリーク防止）
 
 ```swift
-// Bad - バックグラウンドスレッドから WKWebView を操作
-@objc private func didAccessTokenRefreshedByAPIAccess() {
-    view?.reload(withCookie: token.cookie())
+// Bad - バックグラウンドスレッドから UI を操作
+@objc private func didSomeEventOccur() {
+    view?.updateContent()
 }
 
 // Good
-@objc private func didAccessTokenRefreshedByAPIAccess() {
+@objc private func didSomeEventOccur() {
     DispatchQueue.main.async { [weak self] in
         guard let view = self?.view else { return }
         guard view.isViewLoaded() else { return }
-        view.reload(withCookie: token.cookie())
+        view.updateContent()
     }
 }
 ```
@@ -249,9 +249,9 @@ func handleWebNavigation(for action: NavigationActionProtocol, ...) { ... }
 func test_notificationReceived_viewReloaded() { ... }
 
 // Good - ビジネスルールを表現している
-func test_アクセストークン更新通知受信_Presenter生存中はWebViewがリロードされる() { ... }
-func test_アクセストークン更新通知受信_Presenter解放後はWebViewがリロードされない() { ... }
-func test_アクセストークン更新通知受信_View解放後もクラッシュしない() { ... }
+func test_データ更新通知受信_Presenter生存中はViewが更新される() { ... }
+func test_データ更新通知受信_Presenter解放後はViewが更新されない() { ... }
+func test_データ更新通知受信_View解放後もクラッシュしない() { ... }
 ```
 
 ### 境界条件のカバレッジ
@@ -266,20 +266,20 @@ NotificationCenter や非同期処理を含むロジック層（Presenter / View
 
 ### モックの設計
 
-- Mock の completion クロージャが `ScreenRouter.shared` などの本番コードを呼んでいないか
-  - 例：`MockXxxViewController.dismissViewController` が `completion?()` を呼ぶと、その先の `ScreenRouter.shared.showLoginScreen()` が実行されてクラッシュする
+- Mock の completion クロージャがルーターや画面遷移シングルトンなど、本番コードの副作用を呼んでいないか
+  - 例：`MockSomeViewController.dismissViewController` が `completion?()` を呼ぶと、その先の `Router.shared.navigateToNextScreen()` が実行されてクラッシュする
 
 ```swift
 // Bad - completion がテスト中に本番の画面遷移コードを呼ぶ
-class MockGuestConvertViewController: GuestConvertView {
+class MockSomeViewController: SomeView {
     func dismissViewController(completion: (() -> Void)?) {
         isDismissed = true
-        completion?()  // navigateToLoginScreen() が呼ばれてクラッシュ
+        completion?()  // Router.shared.navigateToNextScreen() が呼ばれてクラッシュ
     }
 }
 
 // Good
-class MockGuestConvertViewController: GuestConvertView {
+class MockSomeViewController: SomeView {
     func dismissViewController(completion: (() -> Void)?) {
         isDismissed = true
         // completion は呼ばない（テスト対象外の副作用を防ぐ）
@@ -329,18 +329,18 @@ class MockFrameInfo: FrameInfoProtocol {
 ```swift
 // Bad - main.async 内の処理がまだ実行されていない状態で検証
 notificationCenter.post(name: .foo, object: nil)
-expect(mockView.reloadedCookie).to(equal(cookie))  // タイミング依存で失敗する
+expect(mockView.receivedUpdate).to(equal(expectedValue))  // タイミング依存で失敗する
 
 // Good - 非同期処理の完了を待つ（正常系）
 notificationCenter.post(name: .foo, object: nil)
-expect(self.mockView.reloadedCookie).toEventuallyNot(beNil())
+expect(self.mockView.receivedUpdate).toEventuallyNot(beNil())
 
 // Good - 「呼ばれないこと」を検証する場合（waitUntil でメインキューのフラッシュを待つ）
 notificationCenter.post(name: .foo, object: nil)
 waitUntil { done in
     DispatchQueue.main.async { done() }
 }
-expect(self.mockView.reloadedCookie).to(beNil())
+expect(self.mockView.receivedUpdate).to(beNil())
 ```
 
 ### `waitUntil` vs `toEventually` の使い分け
@@ -356,17 +356,17 @@ completion callback がある非同期処理には `waitUntil` を使う。 `don
 ```swift
 // ✅ completion callback がある場合 - waitUntil で「完了後にアサート」が明確
 waitUntil { done in
-    presenter.fetchBingoTabVisibility { done() }
+    presenter.fetchSomeData { done() }
 }
-expect(presenter.isBingoEnabled).to(beTrue())
+expect(presenter.someProperty).to(beTrue())
 
 // △ 動くが非決定的 - 「いつか true になるはず」とポーリング
-presenter.fetchBingoTabVisibility {}
-expect(presenter.isBingoEnabled).toEventually(beTrue())
+presenter.fetchSomeData {}
+expect(presenter.someProperty).toEventually(beTrue())
 
 // ✅ toEventually が自然なケース - NotificationCenter のように完了タイミングが外から不明な場合
 notificationCenter.post(name: .foo, object: nil)
-expect(mockView.reloadedCookie).toEventuallyNot(beNil())
+expect(mockView.receivedUpdate).toEventuallyNot(beNil())
 ```
 
 ### 「何も起きないこと」の検証
@@ -381,7 +381,7 @@ expect(mockView.reloadedCookie).toEventuallyNot(beNil())
 
 例：
 
-- `BaseWebViewPresenter` を継承するサブクラス（`PointLimitPresenter`、`ContactPresenter` など）
+- `BaseXxxPresenter` を継承するサブクラス（`FooPresenter`、`BarPresenter` など）
 - 同じ通知を購読している Presenter / ViewModel 群
 - 同じ `private weak var view: ConcreteVC!` パターンを持つ Presenter
 - 同じ Reducer を利用する複数の Feature（TCA の場合）
