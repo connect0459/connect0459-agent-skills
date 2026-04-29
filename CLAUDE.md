@@ -34,6 +34,7 @@ connect0459-agent-skills/
 | Skill | Invocation | Description |
 | :--- | :--- | :--- |
 | `swift-ios-review` | `/connect0459-agent-skills:swift-ios-review` | Swift code review for iOS apps |
+| `ts-solidjs-review` | `/connect0459-agent-skills:ts-solidjs-review` | SolidJS code review covering reactivity and design |
 
 ## Plugin Development
 
