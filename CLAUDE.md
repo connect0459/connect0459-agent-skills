@@ -35,6 +35,8 @@ connect0459-agent-skills/
 | :--- | :--- | :--- |
 | `swift-ios-review` | `/connect0459-agent-skills:swift-ios-review` | Swift code review for iOS apps |
 | `ts-solidjs-review` | `/connect0459-agent-skills:ts-solidjs-review` | SolidJS code review covering reactivity and design |
+| `md-tech-blog-review` | `/connect0459-agent-skills:md-tech-blog-review` | Personal tech blog review for Zenn and similar platforms |
+| `md-tech-report-review` | `/connect0459-agent-skills:md-tech-report-review` | Technical report review for work assessments and project evaluations |
 
 ## Plugin Development
 
