@@ -375,6 +375,50 @@ expect(mockView.receivedUpdate).toEventuallyNot(beNil())
 
 ---
 
+## 観点 7: 命名規則（Swift API Design Guidelines）
+
+Swift の命名は [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/) に準拠しているかを確認する。
+
+### 基本原則
+
+- **利用側での明瞭さ（Clarity at the point of use）** を最優先とする。簡潔さは副産物であり目的ではない。
+- 型情報がなくても意味が通じる命名になっているか。
+
+### 変数・定数・型の命名
+
+- 「型（Constraint）」ではなく「役割（Role）」で命名しているか。
+  - Bad: `var string: String`, `let viewController: UIViewController`
+  - Good: `var greeting: String`, `let destination: UIViewController`
+- 型名を繰り返すだけの冗長な語を省いているか。
+  - Bad: `func removeElement(_ element: Element)`
+  - Good: `func remove(_ element: Element)`
+
+### メソッド・関数の命名
+
+- **副作用なし（値を返すだけ）** → 名詞句で命名しているか。
+  - Good: `x.distance(to: y)`, `employees.sorted()`
+- **副作用あり（自身を変更する）** → 命令形動詞で命名しているか。
+  - Good: `print(x)`, `x.sort()`
+- ミュータブル / イミュータブルのペアに一貫した語尾を使っているか。
+  - 動詞の場合: 破壊的変更 `sort()` / 非破壊的変更 `sorted()`, `appending()` のように `-ed`, `-ing` を使い分ける。
+  - 名詞の場合: 非破壊的変更 `union()` / 破壊的変更 `formUnion()` のように `form` プレフィックスを付ける。
+- メソッド呼び出しが英文として自然に読めるか（Fluent API）。
+  - Good: `x.insert(y, at: z)`, `x.isDescendant(of: y)`
+
+### プロトコルの命名
+
+- 「何であるか」を表すプロトコルは **名詞** で命名しているか。
+  - Good: `Collection`, `Sequence`
+- 「能力」を表すプロトコルは **`-able`, `-ible`, `-ing`** サフィックスで命名しているか。
+  - Good: `Equatable`, `Convertible`, `ProgressReporting`
+- **`Protocol` サフィックスを不必要に付けていないか。**
+  - 原則として `XxxProtocol` という命名は避ける。
+  - 例外: 役割名とプロトコル名が衝突する場合のみ許容（標準ライブラリの `IteratorProtocol` がその例）。
+  - Bad: `ViewProtocol`（`View` プロトコルとして命名すれば足りる場合）
+  - Good: `IteratorProtocol`（`Iterator` という役割名を associatedtype が使うため回避が必要な場合）
+
+---
+
 ## 観点の横展開
 
 変更ファイルで問題が見つかった場合、**同一パターンを持つ他のクラス**に同様の問題が残っていないかも確認する。
