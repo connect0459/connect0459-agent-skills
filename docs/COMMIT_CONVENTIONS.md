@@ -20,6 +20,7 @@
 | `refactor` | Restructure skill content without changing behavior |
 | `tidy` | Small, safe cleanup (< 2 min; no behavior change) |
 | `chore` | Plugin manifest, tooling, or config changes |
+| `ci` | CI/CD pipeline changes (GitHub Actions, workflows) |
 
 ## Scopes
 
