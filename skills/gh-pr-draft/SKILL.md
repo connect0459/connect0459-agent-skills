@@ -68,6 +68,8 @@ Types: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `ci`, `perf`
 
 ### Step 4: Write the output
 
+**Important**: If `.connect0459/gh-pr-draft.md` already exists, you **must** read it with the Read tool before writing. Skipping the read will cause the Write tool to fail.
+
 Write the following to `.connect0459/gh-pr-draft.md`, overwriting any previous content:
 
 ```markdown
