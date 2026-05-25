@@ -38,7 +38,7 @@ connect0459-agent-skills/
 | `ts-solidjs-review` | `/connect0459-agent-skills:ts-solidjs-review` | SolidJS code review covering reactivity and design |
 | `md-tech-blog-review` | `/connect0459-agent-skills:md-tech-blog-review` | Personal tech blog review for Zenn and similar platforms |
 | `md-tech-report-review` | `/connect0459-agent-skills:md-tech-report-review` | Technical report review for work assessments and project evaluations |
-| `gh-pr-draft` | `/connect0459-agent-skills:gh-pr-draft` | Generate a draft PR body from recent PR style and branch changes |
+| `gh-pr-draft` | `/connect0459-agent-skills:gh-pr-draft` | Generate a draft PR body from recent PR style and branch changes, then optionally create a GitHub Draft PR |
 
 ## Plugin Development
 

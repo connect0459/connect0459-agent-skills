@@ -1,16 +1,18 @@
 ---
 name: gh-pr-draft
 description: >
-  Generates a draft PR body for the current branch and writes it to `.connect0459/gh-pr-draft.md`.
-  Trigger whenever the user asks to create a PR draft, write a PR description, or prepare PR body text —
-  including phrases like "PR bodyの下書きを作って", "PRの説明文を書いて", "draft PRを書いて",
-  "create PR draft", "write PR body", "PR下書き", or any variation meaning "prepare the pull request description".
-  Also trigger when the user finishes implementation work and asks what to do next in the PR workflow.
+  Generates a draft PR body for the current branch and writes it to `.connect0459/gh-pr-draft.md`,
+  then optionally creates a GitHub Draft PR from it.
+  Trigger whenever the user asks to create a PR draft, write a PR description, prepare PR body text, or submit a PR —
+  including phrases like "PR bodyの下書きを作って", "PRの説明文を書いて", "draft PRを書いて", "PRを出して",
+  "create PR draft", "write PR body", "submit a draft PR", "PR下書き", or any variation meaning
+  "prepare or submit the pull request". Also trigger when the user finishes implementation work and asks
+  what to do next in the PR workflow.
 ---
 
 # PR Draft Generator
 
-Generate a draft PR body for the current branch, write it to `.connect0459/gh-pr-draft.md`.
+Generate a draft PR body for the current branch, write it to `.connect0459/gh-pr-draft.md`, then ask the user whether to create a GitHub Draft PR from it.
 
 ## Process
 
@@ -76,9 +78,29 @@ Write the following to `.connect0459/gh-pr-draft.md`, overwriting any previous c
 
 The title line is a HTML comment so it doesn't appear in the rendered PR body — it's just a convenient suggestion for the author to copy when they open the PR.
 
-### Step 5: Confirm
+### Step 5: Ask the user
 
 Tell the user:
 - The file has been written to `.connect0459/gh-pr-draft.md`
-- The suggested title (repeat it in plain text so they can copy it easily)
+- The suggested title (in plain text so they can copy it easily)
 - One sentence on what template or style source was used
+
+Then ask:
+
+> 次のステップを選んでください:
+> 1. このままGitHub Draft PRを作成する
+> 2. 下書きを確認してから自分で作成する
+
+Wait for the user's response before proceeding.
+
+### Step 6: Create the Draft PR (if the user chose option 1)
+
+Run:
+
+```bash
+gh pr create --draft --title "<suggested title>" --body-file .connect0459/gh-pr-draft.md
+```
+
+After the command succeeds, report the PR URL to the user.
+
+If the command fails (e.g. no remote, uncommitted changes, already has a PR), explain the error and suggest a fix rather than retrying silently.
