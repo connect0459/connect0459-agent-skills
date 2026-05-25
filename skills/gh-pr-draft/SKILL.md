@@ -69,7 +69,7 @@ Types: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `ci`, `perf`
 Write the following to `.connect0459/gh-pr-draft.md`, overwriting any previous content:
 
 ```markdown
-<!-- Title: <suggested title here> -->
+<!-- # <suggested title here> -->
 
 <PR body here>
 ```
