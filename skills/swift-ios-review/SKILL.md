@@ -431,3 +431,17 @@ Swift の命名は [Swift API Design Guidelines](https://www.swift.org/documenta
 - 同じ Reducer を利用する複数の Feature（TCA の場合）
 
 横展開漏れがある場合は「他に同様の問題を抱えているファイル」として別途報告する。
+
+---
+
+## レビュー出力のフォーマット
+
+### PR変更と無関係な箇所のTidying / Refactoring
+
+PRの変更対象外の箇所で気づいたTidyingやRefactoringの候補は、レビュー本体（クラッシュリスク・設計上の問題・改善提案）とは **明確に別のセクション** にまとめて報告する。
+
+```
+## 🔧 関連外のTidying / Refactoring候補（任意対応）
+
+- ファイル名: 内容
+```
