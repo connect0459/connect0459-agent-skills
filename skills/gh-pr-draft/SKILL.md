@@ -90,8 +90,9 @@ Tell the user:
 Then ask:
 
 > 次のステップを選んでください:
-> 1. このままGitHub Draft PRを作成する
-> 2. 下書きを確認してから自分で作成する
+> 1. このままの下書きファイルからDraft PRを作成する
+> 2. 下書きファイルを編集したので、再読み込みしてからDraft PRを作成する
+> 3. その他
 
 Wait for the user's response before proceeding.
 
