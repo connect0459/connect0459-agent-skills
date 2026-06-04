@@ -20,9 +20,9 @@ Generate a draft PR body for the current branch, write it to `.connect0459/gh-pr
 
 Run these in parallel:
 
-1. **Recent PR style** — fetch the last 10 closed/merged PRs and read their bodies:
+1. **Recent PR style** — fetch the last 5 closed/merged PRs and read their bodies:
    ```bash
-   gh pr list --state merged --limit 10 --json number,title,body
+   gh pr list --state merged --limit 5 --json number,title,body
    ```
    Study the tone, section headers, level of detail, and what the user consistently includes or omits. This is the primary style guide.
 
