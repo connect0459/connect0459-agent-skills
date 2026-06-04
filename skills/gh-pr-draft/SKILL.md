@@ -87,8 +87,15 @@ Tell the user:
 - The suggested title (in plain text so they can copy it easily)
 - One sentence on what template or style source was used
 
-Then ask:
+Then ask in the user's language. Examples:
 
+**English:**
+> Choose your next step:
+> 1. Create a Draft PR directly from the draft file as-is
+> 2. I've edited the draft file — reload it and create a Draft PR
+> 3. Something else
+
+**Japanese:**
 > 次のステップを選んでください:
 > 1. このままの下書きファイルからDraft PRを作成する
 > 2. 下書きファイルを編集したので、再読み込みしてからDraft PRを作成する
@@ -96,9 +103,26 @@ Then ask:
 
 Wait for the user's response before proceeding.
 
-### Step 6: Create the Draft PR (if the user chose option 1)
+### Step 6: Create the Draft PR (if the user chose option 1 or 2)
 
-Run:
+**First, check that the branch is pushed to the remote:**
+
+```bash
+git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null
+```
+
+- If this succeeds, the branch has a remote tracking branch — proceed.
+- If this fails (exit code non-zero or empty output), the branch has not been pushed. Push it now:
+
+  ```bash
+  git push -u origin HEAD
+  ```
+
+  Inform the user that the branch was pushed before creating the PR.
+
+**If the user chose option 2**, re-read `.connect0459/gh-pr-draft.md` with the Read tool before proceeding.
+
+**Then run:**
 
 ```bash
 gh pr create --draft --title "<suggested title>" --body-file .connect0459/gh-pr-draft.md
@@ -106,4 +130,4 @@ gh pr create --draft --title "<suggested title>" --body-file .connect0459/gh-pr-
 
 After the command succeeds, report the PR URL to the user.
 
-If the command fails (e.g. no remote, uncommitted changes, already has a PR), explain the error and suggest a fix rather than retrying silently.
+If the command fails (e.g. no remote, already has a PR), explain the error and suggest a fix rather than retrying silently.
