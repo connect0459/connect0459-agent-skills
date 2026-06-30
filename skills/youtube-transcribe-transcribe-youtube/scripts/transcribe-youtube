@@ -55,7 +55,6 @@ printf '==> Downloading audio from %s\n' "$URL"
 AUDIO_FILE="$(
     yt-dlp \
         --quiet \
-        --audio-only \
         --extract-audio \
         -o "$OUTPUT_DIR/%(title)s [%(id)s].%(ext)s" \
         --print "after_move:filepath" \
