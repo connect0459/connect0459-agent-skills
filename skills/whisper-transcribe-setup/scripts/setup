@@ -116,6 +116,8 @@ else
     rm -f "$TMP_FILE"
     # Download to a temp file; rename atomically on success so an interrupted
     # download never leaves a partial .bin that would be mistaken for a valid model.
+    # The EXIT trap covers SIGINT / unexpected exits during the curl itself.
+    trap "rm -f '$TMP_FILE'" EXIT
     if curl -L --progress-bar -o "$TMP_FILE" "$HF_URL"; then
         mv "$TMP_FILE" "$MODEL_FILE"
     else
