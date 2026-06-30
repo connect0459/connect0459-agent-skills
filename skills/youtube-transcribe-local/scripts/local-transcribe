@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+# local-transcribe — ffmpeg normalize + whisper-transcribe
+
+set -euo pipefail
+
+: "${WHISPER_BIN:=$HOME/.local/bin/whisper-transcribe}"
+: "${WHISPER_MODEL_DIR:=$HOME/.local/share/whisper-transcribe/models}"
+
+INPUT=""
+FORMAT="srt"
+MODEL="large-v3-turbo"
+OUTPUT_PREFIX=""
+LANGUAGE=""
+GPU_MODE="auto"
+
+usage() {
+    cat <<USAGE
+Usage: local-transcribe <input-file> [--format srt|txt|vtt|json] [--model NAME] [--output-prefix PATH] [--language CODE] [--gpu|--no-gpu]
+
+Transcribe a local audio/video file using ffmpeg + whisper-transcribe.
+
+Options:
+  --format FORMAT       srt (default, file) | txt (stdout) | vtt | json.
+  --model NAME          Model name. Default: large-v3-turbo.
+  --output-prefix PATH  Write output to <PATH>.<ext>. Default: next to input.
+  --language CODE       Language code, e.g. en, ja. Default: auto-detect.
+  --gpu                 Force GPU/Metal acceleration.
+  --no-gpu              Force CPU mode.
+  -h, --help            Show this help.
+USAGE
+}
+
+die() { printf 'error: %s\n' "$1" >&2; exit 1; }
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --format)        FORMAT="$2"; shift 2 ;;
+        --model)         MODEL="$2"; shift 2 ;;
+        --output-prefix) OUTPUT_PREFIX="$2"; shift 2 ;;
+        --language)      LANGUAGE="$2"; shift 2 ;;
+        --gpu)           GPU_MODE="gpu"; shift ;;
+        --no-gpu)        GPU_MODE="cpu"; shift ;;
+        -h|--help)       usage; exit 0 ;;
+        -*)
+            printf 'Unknown option: %s\n\n' "$1" >&2
+            usage >&2; exit 2 ;;
+        *)
+            if [[ -z "$INPUT" ]]; then
+                INPUT="$1"; shift
+            else
+                die "unexpected extra positional arg: $1"
+            fi ;;
+    esac
+done
+
+[[ -n "$INPUT" ]] || { usage >&2; exit 2; }
+[[ -e "$INPUT" ]] || die "input not found: $INPUT"
+[[ -f "$INPUT" ]] || die "input is not a regular file: $INPUT"
+
+case "$FORMAT" in
+    txt|srt|vtt|json) ;;
+    *) die "unknown --format '$FORMAT' (allowed: txt, srt, vtt, json)" ;;
+esac
+
+# Verify binary and model are installed.
+[[ -x "$WHISPER_BIN" ]] \
+    || die "whisper-transcribe not found at $WHISPER_BIN — run /connect0459-agent-skills:whisper-transcribe-setup first"
+
+MODEL_FILE="$WHISPER_MODEL_DIR/ggml-${MODEL}.bin"
+[[ -f "$MODEL_FILE" ]] \
+    || die "model not found at $MODEL_FILE — run /connect0459-agent-skills:whisper-transcribe-setup --model $MODEL"
+
+# Compute output prefix from original input (before transcoding to temp WAV).
+if [[ -z "$OUTPUT_PREFIX" ]]; then
+    input_dir="$(dirname "$INPUT")"
+    input_base="$(basename "$INPUT")"
+    OUTPUT_PREFIX="$input_dir/${input_base%.*}"
+fi
+
+# Auto GPU mode: CPU inside known agent sandboxes.
+if [[ "$GPU_MODE" == "auto" ]]; then
+    if [[ "${SANDBOX_RUNTIME:-}" == "1" || "${CODEX_SANDBOX:-}" == "seatbelt" ]]; then
+        GPU_MODE="cpu"
+    else
+        GPU_MODE="gpu"
+    fi
+fi
+
+# Transcode input to 16 kHz mono PCM WAV via ffmpeg.
+: "${TMPDIR:=/tmp}"
+WAV="$(mktemp "${TMPDIR%/}/local-transcribe.XXXXXXXX.wav")"
+trap 'rm -f "$WAV"' EXIT
+
+ffmpeg -i "$INPUT" -ar 16000 -ac 1 -f wav "$WAV" -y -loglevel quiet
+
+# Build whisper-transcribe argument list.
+WHISPER_ARGS=("$WAV" --format "$FORMAT" --model "$MODEL" --output-prefix "$OUTPUT_PREFIX")
+
+[[ -n "$LANGUAGE" ]]       && WHISPER_ARGS+=(--language "$LANGUAGE")
+[[ "$GPU_MODE" == "cpu" ]] && WHISPER_ARGS+=(--no-gpu)
+[[ "$GPU_MODE" == "gpu" ]] && WHISPER_ARGS+=(--gpu)
+
+"$WHISPER_BIN" "${WHISPER_ARGS[@]}"

@@ -39,6 +39,11 @@ connect0459-agent-skills/
 | `md-tech-blog-review` | `/connect0459-agent-skills:md-tech-blog-review` | Personal tech blog review for Zenn and similar platforms |
 | `md-tech-report-review` | `/connect0459-agent-skills:md-tech-report-review` | Technical report review for work assessments and project evaluations |
 | `gh-pr-draft` | `/connect0459-agent-skills:gh-pr-draft` | Generate a draft PR body from recent PR style and branch changes, then optionally create a GitHub Draft PR |
+| `whisper-transcribe-setup` | `/connect0459-agent-skills:whisper-transcribe-setup` | Build the whisper-transcribe Rust binary and download the default Whisper model |
+| `whisper-transcribe-transcribe` | internal only | Direct transcription backend wrapping the installed binary |
+| `youtube-transcribe-local` | `/connect0459-agent-skills:youtube-transcribe-local` | Transcribe a local audio/video file via ffmpeg + whisper-transcribe |
+| `youtube-transcribe-transcribe-youtube` | `/connect0459-agent-skills:youtube-transcribe-transcribe-youtube` | Full YouTube URL → SRT + Markdown pipeline |
+| `youtube-transcribe-translate` | `/connect0459-agent-skills:youtube-transcribe-translate` | Translate a transcript or article between English and Japanese |
 
 ## Plugin Development
 
