@@ -36,7 +36,7 @@ conversion and offer translation.
 ```
 
 The script:
-1. Downloads audio from the YouTube URL via `yt-dlp --audio-only` to `~/Downloads`.
+1. Downloads audio from the YouTube URL via `yt-dlp --extract-audio` to `~/Downloads`.
 2. Runs `local-transcribe` (ffmpeg + whisper-transcribe) on the audio → `.srt` file.
 3. Prints `audio: <path>` and `srt: <path>` so you know the artifact locations.
 

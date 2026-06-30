@@ -58,7 +58,7 @@ AUDIO_FILE="$(
         --extract-audio \
         -o "$OUTPUT_DIR/%(title)s [%(id)s].%(ext)s" \
         --print "after_move:filepath" \
-        "$URL"
+        "$URL" | tail -1
 )"
 [[ -f "$AUDIO_FILE" ]] || die "yt-dlp succeeded but audio file not found: $AUDIO_FILE"
 printf 'audio: %s\n' "$AUDIO_FILE"
