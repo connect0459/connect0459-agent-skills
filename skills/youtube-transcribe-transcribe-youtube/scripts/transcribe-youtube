@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# transcribe-youtube — yt-dlp download + local-transcribe → SRT
+
+set -euo pipefail
+
+URL=""
+LANGUAGE=""
+MODEL="large-v3-turbo"
+OUTPUT_DIR="$HOME/Downloads"
+
+usage() {
+    cat <<USAGE
+Usage: transcribe-youtube <youtube-url> [--language CODE] [--model NAME]
+
+Download audio from a YouTube URL and transcribe it to SRT.
+
+Options:
+  --language CODE   Language code (e.g. en, ja). Default: auto-detect.
+  --model NAME      Model name. Default: large-v3-turbo.
+  -h, --help        Show this help.
+USAGE
+}
+
+die() { printf 'error: %s\n' "$1" >&2; exit 1; }
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --language) LANGUAGE="$2"; shift 2 ;;
+        --model)    MODEL="$2"; shift 2 ;;
+        -h|--help)  usage; exit 0 ;;
+        -*)
+            printf 'Unknown option: %s\n\n' "$1" >&2
+            usage >&2; exit 2 ;;
+        *)
+            if [[ -z "$URL" ]]; then
+                URL="$1"; shift
+            else
+                die "unexpected extra positional arg: $1"
+            fi ;;
+    esac
+done
+
+[[ -n "$URL" ]] || { usage >&2; exit 2; }
+
+command -v yt-dlp  >/dev/null 2>&1 || die "yt-dlp not found — brew install yt-dlp"
+command -v ffmpeg  >/dev/null 2>&1 || die "ffmpeg not found — brew install ffmpeg"
+
+: "${WHISPER_BIN:=$HOME/.local/bin/whisper-transcribe}"
+[[ -x "$WHISPER_BIN" ]] \
+    || die "whisper-transcribe not found at $WHISPER_BIN — run /connect0459-agent-skills:whisper-transcribe-setup first"
+
+# Step 1: download audio via yt-dlp.
+# --print after_move:filepath captures the final path after yt-dlp renames the file.
+printf '==> Downloading audio from %s\n' "$URL"
+AUDIO_FILE="$(
+    yt-dlp \
+        --quiet \
+        --audio-only \
+        --extract-audio \
+        -o "$OUTPUT_DIR/%(title)s [%(id)s].%(ext)s" \
+        --print "after_move:filepath" \
+        "$URL"
+)"
+[[ -f "$AUDIO_FILE" ]] || die "yt-dlp succeeded but audio file not found: $AUDIO_FILE"
+printf 'audio: %s\n' "$AUDIO_FILE"
+
+# Step 2: transcribe via local-transcribe (ffmpeg + whisper-transcribe).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOCAL_TRANSCRIBE="$SCRIPT_DIR/../../youtube-transcribe-local/scripts/local-transcribe"
+[[ -x "$LOCAL_TRANSCRIBE" ]] \
+    || die "local-transcribe script not found at $LOCAL_TRANSCRIBE"
+
+printf '==> Transcribing (this may take several minutes in CPU/sandbox mode)\n'
+
+LOCAL_ARGS=("$AUDIO_FILE" --format srt --model "$MODEL")
+[[ -n "$LANGUAGE" ]] && LOCAL_ARGS+=(--language "$LANGUAGE")
+
+"$LOCAL_TRANSCRIBE" "${LOCAL_ARGS[@]}"
+
+# Derive SRT path from audio path for reporting.
+audio_dir="$(dirname "$AUDIO_FILE")"
+audio_base="$(basename "$AUDIO_FILE")"
+SRT_FILE="$audio_dir/${audio_base%.*}.srt"
+[[ -f "$SRT_FILE" ]] || die "SRT file not found at expected path: $SRT_FILE"
+printf 'srt: %s\n' "$SRT_FILE"
