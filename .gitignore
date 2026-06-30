@@ -1,3 +1,6 @@
 # workspaces for skill development
 evals/
 *workspace/
+
+# Rust build artifacts
+target/
