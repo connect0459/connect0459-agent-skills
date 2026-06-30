@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use clap::{Parser, ValueEnum};
 use whisper_rs::{FullParams, SamplingStrategy, WhisperContext, WhisperContextParameters};
 
-use format::{format_timestamp_srt, format_timestamp_vtt, output_prefix_for};
+use format::{append_extension, format_timestamp_srt, format_timestamp_vtt, output_prefix_for};
 
 #[derive(Debug, Clone, ValueEnum)]
 enum Format {
@@ -50,14 +50,24 @@ struct Args {
     no_gpu: bool,
 }
 
-fn models_dir() -> PathBuf {
-    let home = std::env::var("HOME").expect("HOME not set");
-    PathBuf::from(home).join(".local/share/whisper-transcribe/models")
+fn models_dir() -> Result<PathBuf, Box<dyn std::error::Error>> {
+    let home = std::env::var("HOME")
+        .map_err(|_| "HOME environment variable is not set — cannot locate model directory")?;
+    Ok(PathBuf::from(home).join(".local/share/whisper-transcribe/models"))
 }
 
 fn load_samples(path: &std::path::Path) -> Result<Vec<f32>, Box<dyn std::error::Error>> {
     let mut reader = hound::WavReader::open(path)?;
     let spec = reader.spec();
+    if spec.channels != 1 {
+        return Err(format!(
+            "input must be mono (1 channel); got {} channels — \
+             normalize first: ffmpeg -i \"{}\" -ar 16000 -ac 1 output.wav",
+            spec.channels,
+            path.display()
+        )
+        .into());
+    }
     let samples: Vec<f32> = match spec.sample_format {
         hound::SampleFormat::Int => {
             let max = (1i64 << (spec.bits_per_sample - 1)) as f32;
@@ -74,7 +84,7 @@ fn load_samples(path: &std::path::Path) -> Result<Vec<f32>, Box<dyn std::error::
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
 
-    let model_path = models_dir().join(format!("ggml-{}.bin", args.model));
+    let model_path = models_dir()?.join(format!("ggml-{}.bin", args.model));
     if !model_path.exists() {
         eprintln!("error: model not found at {}", model_path.display());
         eprintln!(
@@ -108,6 +118,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     params.set_print_realtime(false);
     params.set_print_timestamps(false);
     params.set_print_special(false);
+    // Disable cross-window context carryover. Setting to 0 prevents repetition
+    // loops on long audio (tamakiii/meta#1043: 24 min lost in a 104-min recording).
+    // Trade-off: term consistency across 30s decode windows is reduced.
     params.set_n_max_text_ctx(0);
 
     if let Some(ref lang) = args.language {
@@ -130,7 +143,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         }
         Format::Srt => {
-            let out_path = prefix.with_extension("srt");
+            let out_path = append_extension(&prefix, "srt");
             let mut out = fs::File::create(&out_path)?;
             for i in 0..n_segments {
                 let text = state.full_get_segment_text(i)?;
@@ -149,7 +162,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("wrote {}", out_path.display());
         }
         Format::Vtt => {
-            let out_path = prefix.with_extension("vtt");
+            let out_path = append_extension(&prefix, "vtt");
             let mut out = fs::File::create(&out_path)?;
             writeln!(out, "WEBVTT")?;
             writeln!(out)?;
@@ -169,7 +182,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("wrote {}", out_path.display());
         }
         Format::Json => {
-            let out_path = prefix.with_extension("json");
+            let out_path = append_extension(&prefix, "json");
             let mut segments = Vec::new();
             for i in 0..n_segments {
                 let text = state.full_get_segment_text(i)?;
