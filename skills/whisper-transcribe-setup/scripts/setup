@@ -39,6 +39,16 @@ done
 step() { printf '\n==> %s\n' "$1"; }
 die()  { printf 'error: %s\n' "$1" >&2; exit 1; }
 
+# Single cleanup handler — accumulates temp artifacts as they are created.
+# Cleared after each artifact is safely moved or no longer needed.
+_CLEANUP_TMP_FILE=""
+_CLEANUP_SMOKE_DIR=""
+cleanup() {
+    [[ -n "$_CLEANUP_TMP_FILE"  ]] && rm -f  "$_CLEANUP_TMP_FILE"
+    [[ -n "$_CLEANUP_SMOKE_DIR" ]] && rm -rf "$_CLEANUP_SMOKE_DIR"
+}
+trap cleanup EXIT
+
 # ---------------------------------------------------------------------------
 # Step 1: prerequisite check
 # ---------------------------------------------------------------------------
@@ -114,15 +124,12 @@ else
     HF_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-${MODEL}.bin"
     TMP_FILE="${MODEL_FILE}.tmp"
     rm -f "$TMP_FILE"
-    # Download to a temp file; rename atomically on success so an interrupted
-    # download never leaves a partial .bin that would be mistaken for a valid model.
-    # The EXIT trap covers SIGINT / unexpected exits during the curl itself.
-    trap "rm -f '$TMP_FILE'" EXIT
+    _CLEANUP_TMP_FILE="$TMP_FILE"
     if curl -L --progress-bar -o "$TMP_FILE" "$HF_URL"; then
         mv "$TMP_FILE" "$MODEL_FILE"
+        _CLEANUP_TMP_FILE=""  # moved; nothing left to clean up
     else
-        rm -f "$TMP_FILE"
-        die "model download failed"
+        die "model download failed"  # cleanup() removes TMP_FILE on exit
     fi
 fi
 
@@ -137,7 +144,7 @@ if [[ "$RUN_SMOKE_TEST" != "true" ]]; then
 else
     : "${TMPDIR:=/tmp}"
     SMOKE_DIR="$(mktemp -d "${TMPDIR%/}/whisper-setup-smoke.XXXXXXXX")"
-    trap 'rm -rf "$SMOKE_DIR"' EXIT
+    _CLEANUP_SMOKE_DIR="$SMOKE_DIR"
 
     run_smoke() {
         local wav="$1" kw1="$2" kw2="$3" label="$4" lang="${5:-}"
