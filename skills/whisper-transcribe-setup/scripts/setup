@@ -135,7 +135,7 @@ else
         [[ -n "$lang" ]] && lang_args=(--language "$lang")
 
         local transcript
-        transcript="$("$BIN" "$wav" --format txt --model "$MODEL" "${lang_args[@]}" 2>&1)"
+        transcript="$("$BIN" "$wav" --format txt --model "$MODEL" ${lang_args[@]+"${lang_args[@]}"} 2>&1)"
         if printf '%s' "$transcript" | grep -qF "$kw1" && printf '%s' "$transcript" | grep -qF "$kw2"; then
             printf '%s smoke test passed: found "%s" and "%s".\n' "$label" "$kw1" "$kw2"
         else
