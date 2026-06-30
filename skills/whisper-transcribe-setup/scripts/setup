@@ -82,7 +82,7 @@ BIN="$WHISPER_BIN_DIR/whisper-transcribe"
 NEED_BUILD=true
 if [[ -x "$BIN" ]]; then
     # Skip build if the installed binary is newer than all source files.
-    if ! find "$SRC_DIR/src" "$SRC_DIR/Cargo.toml" -newer "$BIN" 2>/dev/null | grep -q .; then
+    if ! find "$SRC_DIR/src" "$SRC_DIR/Cargo.toml" "$SRC_DIR/Cargo.lock" -newer "$BIN" 2>/dev/null | grep -q .; then
         step "Binary is up to date; skipping build"
         NEED_BUILD=false
     fi
@@ -112,8 +112,16 @@ if [[ -f "$MODEL_FILE" ]]; then
 else
     step "Downloading model ggml-${MODEL}.bin from HuggingFace (~809 MB for large-v3-turbo)"
     HF_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-${MODEL}.bin"
-    curl -L --progress-bar -o "$MODEL_FILE" "$HF_URL"
-    [[ -f "$MODEL_FILE" ]] || die "model download finished but $MODEL_FILE is missing"
+    TMP_FILE="${MODEL_FILE}.tmp"
+    rm -f "$TMP_FILE"
+    # Download to a temp file; rename atomically on success so an interrupted
+    # download never leaves a partial .bin that would be mistaken for a valid model.
+    if curl -L --progress-bar -o "$TMP_FILE" "$HF_URL"; then
+        mv "$TMP_FILE" "$MODEL_FILE"
+    else
+        rm -f "$TMP_FILE"
+        die "model download failed"
+    fi
 fi
 
 printf 'model: %s\n' "$MODEL_FILE"
