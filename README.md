@@ -36,11 +36,17 @@ Reload without restarting Claude Code:
 connect0459-agent-skills/
 ├── .claude-plugin/
 │   └── plugin.json          # Plugin manifest (name, version, author)
+├── .github/
+│   ├── ISSUE_TEMPLATE/       # Bug report / feature request templates
+│   └── PULL_REQUEST_TEMPLATE.md
 ├── skills/                  # Agent skills invoked via /connect0459-agent-skills:<skill-name>
 │   └── swift-ios-review/
 │       └── SKILL.md
 ├── AGENTS.md                # Agent workflow conventions (CLAUDE.md is a symlink to this)
-└── CONTRIBUTING.md          # Human contributor workflow and commit/branch conventions
+├── CONTRIBUTING.md          # Human contributor workflow and commit/branch conventions
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+└── LICENSE
 ```
 
 ## Development
