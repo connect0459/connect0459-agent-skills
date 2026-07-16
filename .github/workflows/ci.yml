@@ -1,33 +1,45 @@
-name: CI - whisper-transcribe
+name: CI
 
 on:
   push:
     branches: [main]
-    paths:
-      - "src/whisper-transcribe/**"
-      - ".github/workflows/ci-whisper-transcribe.yml"
   pull_request:
-    paths:
-      - "src/whisper-transcribe/**"
-      - ".github/workflows/ci-whisper-transcribe.yml"
   workflow_dispatch:
 
-run-name: CI - whisper-transcribe on ${{ github.head_ref || github.ref_name }}
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+run-name: CI on ${{ github.head_ref || github.ref_name }}
 
 permissions:
   contents: read
 
-defaults:
-  run:
-    working-directory: src/whisper-transcribe
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
-  run:
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      whisper-transcribe: ${{ steps.filter.outputs.whisper-transcribe }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - uses: dorny/paths-filter@7b450fff21473bca461d4b92ce414b9d0420d706 # v4.0.2
+        id: filter
+        with:
+          filters: |
+            whisper-transcribe:
+              - 'src/whisper-transcribe/**'
+              - '.github/workflows/ci.yml'
+
+  whisper-transcribe:
+    needs: changes
+    if: needs.changes.outputs.whisper-transcribe == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/whisper-transcribe
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
