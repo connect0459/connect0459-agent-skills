@@ -1,9 +1,9 @@
 mod format;
 
+use clap::{Parser, ValueEnum};
 use std::fs;
 use std::io::Write;
 use std::path::PathBuf;
-use clap::{Parser, ValueEnum};
 use whisper_rs::{FullParams, SamplingStrategy, WhisperContext, WhisperContextParameters};
 
 use format::{append_extension, format_timestamp_srt, format_timestamp_vtt, output_prefix_for};
