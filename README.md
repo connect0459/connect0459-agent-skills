@@ -39,14 +39,25 @@ connect0459-agent-skills/
 ├── skills/                  # Agent skills invoked via /connect0459-agent-skills:<skill-name>
 │   └── swift-ios-review/
 │       └── SKILL.md
-└── docs/
-    └── COMMIT_CONVENTIONS.md
+├── AGENTS.md                # Agent workflow conventions (CLAUDE.md is a symlink to this)
+└── CONTRIBUTING.md          # Human contributor workflow and commit/branch conventions
 ```
 
 ## Development
 
-See [`CLAUDE.md`](./CLAUDE.md) for contributor and agent workflow conventions (adding a skill, local testing, commit/branch conventions).
+See [`AGENTS.md`](./AGENTS.md) for agent workflow conventions (adding a skill, local testing) and
+[`CONTRIBUTING.md`](./CONTRIBUTING.md) for the human contributor workflow, including commit and
+branch conventions.
+
+## Contributing
+
+Contributions are welcome. Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) and follow the
+[`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
+
+## Security
+
+See [`SECURITY.md`](./SECURITY.md) for the vulnerability reporting process.
 
 ## License
 
-MIT
+[MIT](./LICENSE)
