@@ -1,6 +1,11 @@
 ---
 name: whisper-transcribe-transcribe
 argument-hint: "<input.wav> [--format srt|txt|vtt|json] [--model NAME] [--output-prefix PATH] [--language CODE] [--gpu|--no-gpu]"
+description: >-
+  Internal transcription backend wrapping the `~/.local/bin/whisper-transcribe` binary.
+  Not intended for direct user invocation — called by
+  `/connect0459-agent-skills:youtube-transcribe-local` to transcribe a 16 kHz mono PCM WAV
+  file into SRT, TXT, VTT, or JSON.
 ---
 
 # whisper-transcribe-transcribe
