@@ -58,6 +58,7 @@ A well-structured technical report typically includes:
 | Implementation Details | Key technical decisions, design choices, tradeoffs |
 | Results / Outcomes | What changed; measurable impact |
 | Future Work (if applicable) | What remains; known limitations |
+| Scope Boundary (optional) | What is explicitly outside the author's contribution or outside evaluation scope, with a pointer to where adjacent work is covered |
 
 Check:
 - Are all critical sections present and non-trivial?
@@ -65,6 +66,17 @@ Check:
 - Is the overview accurate relative to the body?
 - Is the problem statement concrete and observable (not just "there was inefficiency")?
 - Is the author's personal contribution visible vs. team/system contributions?
+- Is the section order causal (problem → rationale for the countermeasure → result) rather than
+  chronological/implementation order? Sections ordered by "what was built, in the order it was
+  built" read as a list of accomplishments rather than a reasoned argument.
+- If the report names specific things it wants evaluated, are they narrowed to a small number
+  (2–3) and anchor-linked to the sections that substantiate them, so the document functions as a
+  navigable index rather than requiring the reader to hunt for the relevant part?
+- If the work involved teammates' or adjacent designs, is the author's own scope clearly
+  separated from theirs — linking out to their material instead of re-explaining it, and stating
+  only the prerequisite context the reader needs to follow the author's part?
+- Do "Future Work" items connect back to the problems/results already discussed in this
+  document, rather than listing unrelated roadmap items that dilute the narrative?
 
 ### Step 2: Evidence Quality & Persuasiveness (Pillar 2)
 
@@ -75,6 +87,22 @@ Check:
 - Are before/after comparisons present for the claimed improvements?
 - Does the document show engineering judgment, not just execution facts?
 - Are claims internally consistent — no contradictions between sections?
+- When a decision has multiple supporting reasons, is the primary driver (e.g. product/UX/
+  business judgment) distinguished from secondary supporting reasons (e.g. a technical
+  constraint)? Framing a technical limitation as the sole reason undersells the judgment
+  actually made — check which reason is doing the real work and make sure the report says so.
+- Are constraints (data model differences, external system limits, etc.) introduced before the
+  decisions that depend on them, so the reader already has the context by the time the decision
+  is explained? A decision explained first and justified by a constraint revealed only later
+  forces the reader to backtrack.
+- Are alternative-design comparisons kept only where they materially change the reader's
+  assessment of the work? A comparison with low evaluation "payoff" is better cut or condensed
+  to a single sentence than given its own subsection.
+- Are estimated or extrapolated figures (projections, assumed multipliers) clearly labeled and
+  distinguished from directly measured results? Prefer the real observed figure over a
+  speculative projection; flag any unlabeled estimate presented as if it were measured.
+- Flag misused statistical or technical vocabulary (e.g. calling a simple before/after decrease
+  a "correlation") — this undermines credibility even when the underlying data is sound.
 
 ### Step 3: Reader Consideration (Pillar 3)
 
@@ -83,6 +111,14 @@ Check:
 - Is the author's individual contribution clearly distinguished from the team's?
 - Do section transitions work — does each section set up the next?
 - Would an evaluator finish reading knowing exactly what the author did and how well?
+- For readers unfamiliar with the systems/services involved, is there a concept or relationship
+  diagram (how the pieces relate) before the report dives into detailed flows? Prose-only
+  descriptions of multi-service interactions are hard to follow without a visual anchor.
+- Is the problem grounded in a concrete persona's experience (e.g. "a user with no prior
+  context encountering this") rather than stated only in abstract system terms? Concrete pain
+  points are more persuasive than a purely architectural framing of the problem.
+- Where a flow or UI changed, are before/after visuals (diagrams, screenshots) included rather
+  than prose-only description?
 
 ### Step 4: Technical Depth (Pillar 4)
 
@@ -99,6 +135,11 @@ Check:
 - Is terminology consistent — no synonym drift for the same concept?
 - Are there ambiguous pronouns or dropped subjects that create confusion?
 - Are headings informative enough to orient a skim reader?
+- Are NOTE/TIP-style callouts used for content that could be woven into the main text — or that
+  will be explained verbally in an accompanying presentation anyway? Excessive callouts
+  fragment the reading flow; consider consolidating into body text.
+- Does the glossary (if any) include only terms that actually appear in the body? Trim entries
+  for terms not used in the text.
 
 ## Output Format
 
@@ -113,6 +154,10 @@ Respond in the same language as the user unless asked otherwise.
 
 **【想定読み手】**
 (Who will evaluate this and what they're looking to understand)
+
+**【評価ポイントの明示】**
+(Are the things the author wants evaluated explicitly named, narrowed to a small number, and
+anchor-linked to the sections that substantiate them? Or implicit/scattered across the document?)
 
 **【構造の印象】**
 (One sentence: e.g., "根拠が明確で成果が定量化されており説得力がある" or "解決手法の判断根拠が薄く、成果セクションに数値が不足している")
