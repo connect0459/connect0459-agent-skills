@@ -29,7 +29,7 @@ Transcribe a local audio or video file by composing ffmpeg normalization and the
 
 Options:
 
-```
+```text
 --format srt|txt|vtt|json    Output format. Default: srt (file next to input).
 --model NAME                 Model name. Default: large-v3-turbo.
 --output-prefix PATH         Write output to <PATH>.<ext>. Default: next to input.

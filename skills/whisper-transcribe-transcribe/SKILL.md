@@ -11,7 +11,7 @@ called by `/connect0459-agent-skills:youtube-transcribe-local`.
 
 ## CLI
 
-```
+```text
 whisper-transcribe <input.wav>
     [--format srt|txt|vtt|json]   default: srt
     [--model NAME]                default: large-v3-turbo

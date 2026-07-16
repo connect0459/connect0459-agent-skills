@@ -407,7 +407,7 @@ val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
 PRの変更対象外の箇所で気づいたTidyingやRefactoringの候補は、レビュー本体（クラッシュリスク・設計上の問題・改善提案）とは **明確に別のセクション** にまとめて報告する。
 
-```
+```markdown
 ## 🔧 関連外のTidying / Refactoring候補（任意対応）
 
 - ファイル名: 内容

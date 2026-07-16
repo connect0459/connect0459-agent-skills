@@ -36,6 +36,7 @@ conversion and offer translation.
 ```
 
 The script:
+
 1. Downloads audio from the YouTube URL via `yt-dlp --extract-audio` to `~/Downloads`.
 2. Runs `local-transcribe` (ffmpeg + whisper-transcribe) on the audio → `.srt` file.
 3. Prints `audio: <path>` and `srt: <path>` so you know the artifact locations.
@@ -70,6 +71,7 @@ Do not start the translation automatically — the user decides.
 ## Output
 
 Both files are durable artifacts on disk:
+
 - `.srt` — canonical subtitle artifact, timestamped, downgradeable to plain text
 - `.md` — readable article form
 

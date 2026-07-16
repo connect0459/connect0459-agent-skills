@@ -139,6 +139,7 @@ Estimated reader profile — correct me if this is off.
 ### ⚠️ 改善提案 (Improvements)
 
 **重要度の定義**:
+
 - **必須 (MUST)**: 読者の理解を妨げる・技術的に誤り・公開前に解決が必要
 - **推奨 (IMO)**: 品質向上に寄与するが筆者の判断に委ねる
 - **任意 (nits)**: 好みの範囲・軽微な磨き
@@ -146,6 +147,7 @@ Estimated reader profile — correct me if this is off.
 ⛔️ 必須 ━━━━━━━━━━━━━━━━━━━━━━━━
 
 [観点] L番号 — 問題の要約（1行）
+
 ```diff
 // 修正案（動詞で終わる短い指示）
 - 対象行
@@ -157,6 +159,7 @@ Estimated reader profile — correct me if this is off.
 ⚠️ 推奨 ━━━━━━━━━━━━━━━━━━━━━━━━
 
 [観点] L番号 — 問題の要約（1行）
+
 ```diff
 - 対象行
 + 提案行
@@ -174,7 +177,7 @@ Estimated reader profile — correct me if this is off.
 
 If I were writing this, I might structure it like:
 
-```
+```markdown
 ## TL;DR
 
 想定読者: （具体的な読者像 1行）
