@@ -50,7 +50,7 @@ Use this to prioritize feedback — surface the highest-impact issues first.
 A well-structured technical report typically includes:
 
 | Section | Purpose |
-|---------|---------|
+| --------- | --------- |
 | Overview / Summary | What was done, in 2–3 sentences |
 | Background / Context | Why this work was needed; team and system context |
 | Problem Statement | The specific, observable problem being solved |
@@ -61,6 +61,7 @@ A well-structured technical report typically includes:
 | Scope Boundary (optional) | What is explicitly outside the author's contribution or outside evaluation scope, with a pointer to where adjacent work is covered |
 
 Check:
+
 - Are all critical sections present and non-trivial?
 - Does the flow hold: problem → decision rationale → results?
 - Is the overview accurate relative to the body?
@@ -174,6 +175,7 @@ anchor-linked to the sections that substantiate them? Or implicit/scattered acro
 ### ⚠️ 改善提案 (Improvements)
 
 **重要度の定義**:
+
 - **必須 (MUST)**: 評価者が判断できない・主張が根拠なし・重要な情報が欠落
 - **推奨 (IMO)**: 説得力や明確さが増すが筆者の判断に委ねる
 - **任意 (nits)**: 軽微な表現・フォーマット改善
@@ -181,6 +183,7 @@ anchor-linked to the sections that substantiate them? Or implicit/scattered acro
 ⛔️ 必須 ━━━━━━━━━━━━━━━━━━━━━━━━
 
 [観点] セクション名 / L番号 — 問題の要約（1行）
+
 ```diff
 // 修正案
 - 現在の記述
@@ -192,6 +195,7 @@ anchor-linked to the sections that substantiate them? Or implicit/scattered acro
 ⚠️ 推奨 ━━━━━━━━━━━━━━━━━━━━━━━━
 
 [観点] セクション名 / L番号 — 問題の要約（1行）
+
 ```diff
 - 現在の記述
 + 提案する記述

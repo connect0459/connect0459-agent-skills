@@ -179,7 +179,7 @@ class SomeViewModel: ObservableObject {
 }
 ```
 
-**例外: SwiftUI の dismiss 操作が必要な sheet 管理プロパティ**
+#### 例外: SwiftUI の dismiss 操作が必要な sheet 管理プロパティ
 
 `.sheet(item:)` や `.sheet(isPresented:)` は SwiftUI が dismiss 時にバインディングへ書き戻す（`nil` / `false` にする）ため、`private(set)` と両立しない。意図的な例外として許容するか、`Binding` ラッパーでアクションに委譲する。
 
@@ -348,7 +348,7 @@ expect(self.mockView.receivedUpdate).to(beNil())
 completion callback がある非同期処理には `waitUntil` を使う。 `done()` が呼ばれた後にアサーションするため決定的に検証できる。
 
 | | `waitUntil { done in ... }` | `toEventually(...)` |
-|---|---|---|
+| --- | --- | --- |
 | 向き | completion callback がある非同期処理 | 外から完了を知れない状態変化 |
 | 仕組み | `done()` が呼ばれるまでブロック（決定的） | タイムアウトまでポーリング（非決定的） |
 | 適用例 | `fetchXxx(completion:)` | NotificationCenter 通知後の状態変化 |
@@ -440,7 +440,7 @@ Swift の命名は [Swift API Design Guidelines](https://www.swift.org/documenta
 
 PRの変更対象外の箇所で気づいたTidyingやRefactoringの候補は、レビュー本体（クラッシュリスク・設計上の問題・改善提案）とは **明確に別のセクション** にまとめて報告する。
 
-```
+```markdown
 ## 🔧 関連外のTidying / Refactoring候補（任意対応）
 
 - ファイル名: 内容

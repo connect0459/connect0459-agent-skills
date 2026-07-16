@@ -26,7 +26,7 @@ according to the rules below, write the output file, and reply with `wrote <path
 
 The user's message will look like:
 
-```
+```text
 translate <input> [--to ja|en] [--from ja|en] [--format md|txt] [--output PATH]
 ```
 
@@ -82,7 +82,7 @@ breaks only. The translation rules still apply; only the Markdown markup is drop
 
 ## Examples
 
-```
+```text
 translate ~/Downloads/Talk Title [abc123].md --to ja
 # wrote ~/Downloads/Talk Title [abc123].ja.md
 

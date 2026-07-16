@@ -21,9 +21,11 @@ Generate a draft PR body for the current branch, write it to `.connect0459/gh-pr
 Run these in parallel:
 
 1. **Recent PR style** — fetch the last 5 closed/merged PRs and read their bodies:
+
    ```bash
    gh pr list --state merged --limit 5 --json number,title,body
    ```
+
    Study the tone, section headers, level of detail, and what the user consistently includes or omits. This is the primary style guide.
 
 2. **PR template** — check these paths in order, use the first one found:
@@ -34,10 +36,12 @@ Run these in parallel:
    - `.github/PULL_REQUEST_TEMPLATE/` (directory — use the first `.md` file inside)
 
 3. **Branch changes** — understand what was done:
+
    ```bash
    git log origin/main..HEAD --oneline
    git diff origin/main..HEAD --stat
    ```
+
    Read the commit messages to understand intent. Glance at a few key changed files if needed to understand the "why", but do not list file names or paths in the draft.
 
 4. **Current draft** — read `.connect0459/gh-pr-draft.md` if it exists (it may contain a prior draft or a template hint).
@@ -45,9 +49,11 @@ Run these in parallel:
 ### Step 2: Infer a suggested title
 
 From the commit messages and branch name, infer a Conventional Commits title:
-```
+
+```text
 <type>(<scope>): <short description>
 ```
+
 Types: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `ci`, `perf`
 
 ### Step 3: Write the draft
@@ -57,6 +63,7 @@ Types: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `ci`, `perf`
 **If no template**: mirror the structure and length of the user's recent PRs. If their PRs typically have 3 bullet points, write 3 bullet points. If they write a short paragraph, write a short paragraph. Don't over-engineer what is usually concise.
 
 **Evergreen writing rule**: write at the level of *intent and behavior*, not implementation detail.
+
 - Describe *what the system now does* or *what problem this solves*, not *which files were changed* or *which method was added*.
 - File names, method names, and class names drift as code evolves; behavior descriptions don't.
 
@@ -83,6 +90,7 @@ The title line is a HTML comment so it doesn't appear in the rendered PR body �
 ### Step 5: Ask the user
 
 Tell the user:
+
 - The file has been written to `.connect0459/gh-pr-draft.md`
 - The suggested title (in plain text so they can copy it easily)
 - One sentence on what template or style source was used
@@ -91,12 +99,14 @@ Then ask in the user's language. Examples:
 
 **English:**
 > Choose your next step:
+>
 > 1. Create a Draft PR directly from the draft file as-is
 > 2. I've edited the draft file — reload it and create a Draft PR
 > 3. Something else
 
 **Japanese:**
 > 次のステップを選んでください:
+>
 > 1. このままの下書きファイルからDraft PRを作成する
 > 2. 下書きファイルを編集したので、再読み込みしてからDraft PRを作成する
 > 3. その他
