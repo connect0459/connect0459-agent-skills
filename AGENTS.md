@@ -9,7 +9,7 @@
 This project is intended for public release. All of the following must be written in **English**:
 
 - Commit messages
-- Documentation (including `docs/`, `AGENTS.md`, `README.md`, etc.)
+- Documentation (including `AGENTS.md`, `README.md`, `CONTRIBUTING.md`, etc.)
 - Skill descriptions and frontmatter
 
 ## Project Overview
