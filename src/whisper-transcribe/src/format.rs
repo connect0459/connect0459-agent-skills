@@ -97,10 +97,7 @@ mod tests {
 
     #[test]
     fn output_prefix_given_overrides() {
-        let prefix = output_prefix_for(
-            Path::new("/tmp/audio.wav"),
-            Some(Path::new("/out/result")),
-        );
+        let prefix = output_prefix_for(Path::new("/tmp/audio.wav"), Some(Path::new("/out/result")));
         assert_eq!(prefix, PathBuf::from("/out/result"));
     }
 
