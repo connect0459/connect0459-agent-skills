@@ -59,6 +59,9 @@ category names), strongly recommend human review before publishing, and stop her
 - Does the conclusion answer "so what should I do with this?"
 - Is there a clear before/after — what does the reader know or feel differently after reading?
 - If the ending is vague, flag it as MUST.
+- If the article motivates a problem in abstract system terms, could it land harder by grounding
+  it in a concrete persona's experience (e.g. "a user hitting this with no prior context")?
+  Concrete pain points are more persuasive than a purely architectural framing.
 
 ### Step 3: Technical Accuracy (Pillar 2)
 
@@ -66,11 +69,22 @@ category names), strongly recommend human review before publishing, and stop her
 - Are technical claims accurate — no outdated APIs, wrong versions, or misleading comparisons?
 - Are tool/library comparisons fair and balanced?
 - Are technical terms defined on first use, at the right level for the assumed reader?
+- Are estimated/extrapolated numbers (projections, assumed multipliers) clearly labeled and
+  distinguished from directly measured results? Flag any unlabeled estimate presented as if
+  it were measured data.
+- Flag misused statistical or technical vocabulary (e.g. calling a simple before/after decrease
+  a "correlation") — this undermines credibility even when the underlying data is sound.
 
 ### Step 4: Structure & Readability (Pillar 3)
 
 - Is the conclusion or takeaway stated at the start of each section (paragraph writing)?
 - Is the logical flow clear — does each section set up the next naturally?
+- Does the article follow a causal order (problem → why this approach → result) rather than a
+  chronological "what I did, in the order I did it" listing? A chronological structure reads as
+  a log of accomplishments, not an argument the reader can follow.
+- For unfamiliar systems/services, is there a concept or relationship diagram before detailed
+  flows are described? Prose-only descriptions of multi-component interactions are hard to
+  follow without a visual anchor.
 - Are headings descriptive enough for a skim reader to understand the outline?
 - Are sentences over ~50 characters long? Suggest splitting where helpful.
 - Missing particles (助詞: を・が・は・に・で)?
