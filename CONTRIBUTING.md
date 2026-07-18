@@ -78,6 +78,10 @@ for project-wide changes (e.g., `docs: update README`).
 | `skill` | Changes to any file under `skills/` |
 | `plugin` | Changes to `.claude-plugin/plugin.json` |
 
+### Type vs. Scope Precedence
+
+The type vocabulary above mixes two axes: an **impact axis** (`feat`, `fix`, `refactor` — the effect of a change on the plugin's behavior) and a **domain axis** (`docs`, `chore`, `ci`, `tidy` — a layer with no behavioral effect). When a change is fully contained within a domain, use that domain as `type` (e.g. `docs: update README`); do not use it as `scope` on an impact-axis type (avoid `fix(docs): ...`). `scope` sub-divides whatever `type` already established (e.g. `feat(skill)`); it is not a substitute classification axis.
+
 ### Subject line
 
 - Use the imperative mood: "add", "fix", "remove" — not "added" or "adds"
@@ -119,11 +123,11 @@ docs: add commit conventions guide
 
 ### Branch naming
 
-`feature/xxx`, `fix/xxx`, `docs/xxx`
+`feat/xxx`, `fix/xxx`, `docs/xxx`
 
 ## Pull request process
 
-1. Fork the repository and create a branch: `feature/xxx`, `fix/xxx`, `docs/xxx`.
+1. Fork the repository and create a branch: `feat/xxx`, `fix/xxx`, `docs/xxx`.
 2. Add or update the skill under `skills/<skill-name>/SKILL.md`.
 3. Run `pre-commit run --all-files` and commit any resulting diffs.
 4. Update the skill table in [`README.md`](./README.md) if you added, renamed, or removed a skill.
