@@ -44,4 +44,4 @@ Reload without restarting:
 ### Git
 
 - Conventional Commits in English — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for types, scopes, and examples
-- Branch naming: `feature/xxx`, `fix/xxx`, `docs/xxx`
+- Branch naming: `feat/xxx`, `fix/xxx`, `docs/xxx`

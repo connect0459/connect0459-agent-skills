@@ -119,11 +119,11 @@ docs: add commit conventions guide
 
 ### Branch naming
 
-`feature/xxx`, `fix/xxx`, `docs/xxx`
+`feat/xxx`, `fix/xxx`, `docs/xxx`
 
 ## Pull request process
 
-1. Fork the repository and create a branch: `feature/xxx`, `fix/xxx`, `docs/xxx`.
+1. Fork the repository and create a branch: `feat/xxx`, `fix/xxx`, `docs/xxx`.
 2. Add or update the skill under `skills/<skill-name>/SKILL.md`.
 3. Run `pre-commit run --all-files` and commit any resulting diffs.
 4. Update the skill table in [`README.md`](./README.md) if you added, renamed, or removed a skill.
