@@ -10,9 +10,7 @@ description: >-
 
 # whisper-transcribe-transcribe
 
-Internal transcription backend. Wraps the `~/.local/bin/whisper-transcribe` binary built by
-`/connect0459-agent-skills:whisper-transcribe-setup`. Not intended for direct user invocation —
-called by `/connect0459-agent-skills:youtube-transcribe-local`.
+Internal transcription backend. Wraps the `~/.local/bin/whisper-transcribe` binary built by `/connect0459-agent-skills:whisper-transcribe-setup`. Not intended for direct user invocation — called by `/connect0459-agent-skills:youtube-transcribe-local`.
 
 ## CLI
 

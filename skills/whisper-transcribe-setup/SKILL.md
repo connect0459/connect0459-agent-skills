@@ -17,10 +17,7 @@ description: >-
 
 # whisper-transcribe-setup
 
-Build the `whisper-transcribe` Rust binary from `src/whisper-transcribe/` in this repository
-and download the default Whisper model. The binary and model are the shared backend for
-`/connect0459-agent-skills:youtube-transcribe-local` and
-`/connect0459-agent-skills:youtube-transcribe-transcribe-youtube`.
+Build the `whisper-transcribe` Rust binary from `src/whisper-transcribe/` in this repository and download the default Whisper model. The binary and model are the shared backend for `/connect0459-agent-skills:youtube-transcribe-local` and `/connect0459-agent-skills:youtube-transcribe-transcribe-youtube`.
 
 ## Script
 
@@ -61,8 +58,7 @@ The script checks and reports all missing tools before doing any work:
 - `ffmpeg` — audio transcoding for local transcription (`brew install ffmpeg`)
 - `yt-dlp` — YouTube download for the transcribe-youtube skill (`brew install yt-dlp`)
 
-`cmake` and `clang` are toolchain dependencies — the user authors only Rust code;
-the C++ compilation happens inside `cargo build` via `whisper-sys`.
+`cmake` and `clang` are toolchain dependencies — the user authors only Rust code; the C++ compilation happens inside `cargo build` via `whisper-sys`.
 
 ## Disk
 

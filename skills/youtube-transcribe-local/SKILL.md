@@ -18,8 +18,7 @@ context: fork
 
 # youtube-transcribe-local
 
-Transcribe a local audio or video file by composing ffmpeg normalization and the
-`whisper-transcribe` Rust binary.
+Transcribe a local audio or video file by composing ffmpeg normalization and the `whisper-transcribe` Rust binary.
 
 ## Script
 
@@ -50,14 +49,11 @@ Options:
 ## When to use this skill
 
 - The user has a local file and wants a transcript or subtitles.
-- Prefer this over invoking `whisper-transcribe` directly: this skill handles the ffmpeg
-  transcoding step and sets the correct output prefix relative to the original input.
+- Prefer this over invoking `whisper-transcribe` directly: this skill handles the ffmpeg transcoding step and sets the correct output prefix relative to the original input.
 
 ## Long content
 
-Long transcripts can be tens of KB. This skill runs with `context: fork` so the transcript
-stays out of the calling session's prompt cache. Return the artifact path and a short summary
-to the parent session.
+Long transcripts can be tens of KB. This skill runs with `context: fork` so the transcript stays out of the calling session's prompt cache. Return the artifact path and a short summary to the parent session.
 
 ## Examples
 

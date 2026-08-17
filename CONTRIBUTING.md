@@ -70,8 +70,7 @@ cargo test
 
 ### Scopes
 
-Scope is **required** when the change targets a specific area; omit it only
-for project-wide changes (e.g., `docs: update README`).
+Scope is **required** when the change targets a specific area; omit it only for project-wide changes (e.g., `docs: update README`).
 
 | Scope | When to use |
 | :--- | :--- |
