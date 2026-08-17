@@ -18,9 +18,7 @@ context: fork
 
 # youtube-transcribe-translate
 
-Translate a transcript or article between English and Japanese. You (Claude) do the translation
-in this forked context — no subprocess, no external MT tool. Read the input, translate
-according to the rules below, write the output file, and reply with `wrote <path>`.
+Translate a transcript or article between English and Japanese. You (Claude) do the translation in this forked context — no subprocess, no external MT tool. Read the input, translate according to the rules below, write the output file, and reply with `wrote <path>`.
 
 ## Invocation
 
@@ -45,8 +43,7 @@ Parse the arguments. Defaults:
 1. **Read the input** with the Read tool. Transcripts can be large — read fully.
 2. **Determine source and target languages** from flags or detection.
 3. **Determine output path** (language-tagged default or `--output`).
-   If the destination is sandbox-blocked, fall back to `$TMPDIR/<basename>` and
-   announce the fallback: `wrote /tmp/... (couldn't write next to input: permission denied)`.
+   If the destination is sandbox-blocked, fall back to `$TMPDIR/<basename>` and announce the fallback: `wrote /tmp/... (couldn't write next to input: permission denied)`.
 4. **Translate** using the rules below.
 5. **Sanity check**: a faithful translation carries the same information density as the source.
    If the output is a small fraction of the input, something went wrong — stop and tell the user.

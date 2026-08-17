@@ -126,8 +126,7 @@ Respond in the same language as the user unless asked otherwise.
 (Who will evaluate this and what they're looking to understand)
 
 **【評価ポイントの明示】**
-(Are the things the author wants evaluated explicitly named, narrowed to a small number, and
-anchor-linked to the sections that substantiate them? Or implicit/scattered across the document?)
+(Are the things the author wants evaluated explicitly named, narrowed to a small number, and anchor-linked to the sections that substantiate them? Or implicit/scattered across the document?)
 
 **【構造の印象】**
 (One sentence: e.g., "根拠が明確で成果が定量化されており説得力がある" or "解決手法の判断根拠が薄く、成果セクションに数値が不足している")
@@ -180,8 +179,7 @@ anchor-linked to the sections that substantiate them? Or implicit/scattered acro
 
 ### 不足セクション（もしあれば）
 
-List any expected sections that are entirely missing, with a brief note on what they
-should contain. Omit this section if nothing is missing.
+List any expected sections that are entirely missing, with a brief note on what they should contain. Omit this section if nothing is missing.
 
 ## Rules
 

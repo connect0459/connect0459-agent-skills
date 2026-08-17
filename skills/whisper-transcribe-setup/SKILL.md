@@ -71,5 +71,4 @@ The script checks and reports all missing tools before doing any work:
 - Binary: `~/.local/bin/whisper-transcribe`
 - Model: `~/.local/share/whisper-transcribe/models/ggml-large-v3-turbo.bin`
 
-Use `/connect0459-agent-skills:youtube-transcribe-local` for local file transcription,
-or `/connect0459-agent-skills:youtube-transcribe-transcribe-youtube` for the full YouTube workflow.
+Use `/connect0459-agent-skills:youtube-transcribe-local` for local file transcription, or `/connect0459-agent-skills:youtube-transcribe-transcribe-youtube` for the full YouTube workflow.

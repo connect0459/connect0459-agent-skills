@@ -36,8 +36,7 @@ pre-commit run --all-files
 
 To add a new skill, see the "Adding a skill" workflow in [`AGENTS.md`](./AGENTS.md).
 
-For `src/whisper-transcribe/` (Rust), see the CI checks in
-[`.github/workflows/ci-whisper-transcribe.yml`](./.github/workflows/ci-whisper-transcribe.yml):
+For `src/whisper-transcribe/` (Rust), see the CI checks in [`.github/workflows/ci-whisper-transcribe.yml`](./.github/workflows/ci-whisper-transcribe.yml):
 
 ```sh
 cd src/whisper-transcribe
