@@ -88,7 +88,6 @@ The type vocabulary above mixes two axes: an **impact axis** (`feat`, `fix`, `re
 
 ### Body (optional)
 
-- Wrap at 72 characters
 - Explain **why**, not what — the diff already shows what changed
 - Leave one blank line between subject and body
 
