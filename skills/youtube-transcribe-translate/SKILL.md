@@ -30,23 +30,18 @@ translate <input> [--to ja|en] [--from ja|en] [--format md|txt] [--output PATH]
 
 Parse the arguments. Defaults:
 
-- `--to` — **required**. If omitted, do not guess: ask the user which target language they want.
-  Short and mixed-language texts mis-detect; explicit direction is the safer default.
+- `--to` — **required**. If omitted, do not guess: ask the user which target language they want. Short and mixed-language texts mis-detect; explicit direction is the safer default.
 - `--from` — usually unnecessary; detect the source from the text.
 - `--format` — follows the input format (`md` in → `md` out).
-- Output path — language-tagged stem next to the source:
-  `talk.md` + `--to ja` → `talk.ja.md`; `talk.en.md` + `--to ja` → `talk.en.ja.md`.
-  Honor `--output` when supplied.
+- Output path — language-tagged stem next to the source: `talk.md` + `--to ja` → `talk.ja.md`; `talk.en.md` + `--to ja` → `talk.en.ja.md`. Honor `--output` when supplied.
 
 ## Steps
 
 1. **Read the input** with the Read tool. Transcripts can be large — read fully.
 2. **Determine source and target languages** from flags or detection.
-3. **Determine output path** (language-tagged default or `--output`).
-   If the destination is sandbox-blocked, fall back to `$TMPDIR/<basename>` and announce the fallback: `wrote /tmp/... (couldn't write next to input: permission denied)`.
+3. **Determine output path** (language-tagged default or `--output`). If the destination is sandbox-blocked, fall back to `$TMPDIR/<basename>` and announce the fallback: `wrote /tmp/... (couldn't write next to input: permission denied)`.
 4. **Translate** using the rules below.
-5. **Sanity check**: a faithful translation carries the same information density as the source.
-   If the output is a small fraction of the input, something went wrong — stop and tell the user.
+5. **Sanity check**: a faithful translation carries the same information density as the source. If the output is a small fraction of the input, something went wrong — stop and tell the user.
 6. **Write** with the Write tool.
 7. **Reply** with exactly `wrote <path>`. Do not paste the translation into the reply.
 
@@ -58,10 +53,8 @@ Produce a translation the reader experiences as if the document had been written
 - **Natural in the target language.** Translate meaning, not surface syntax. Reorder sentences, split or join clauses, choose idiom — whatever reads fluently to a native reader.
 - **Preserve document structure exactly.** Heading levels, list nesting, bold/italic, blockquotes, and tables carry meaning — translate only the text inside them.
 - **Leave code and machine-readable tokens verbatim.** Fenced code blocks, inline `code`, URLs, file paths, command names, flags, and identifiers must not be translated. Natural-language comments inside code blocks may be translated.
-- **Technical terms.** Use the term a practitioner in the target language actually uses: sometimes the borrowed English loanword, sometimes the established native equivalent.
-  Accuracy for the domain reader beats dictionary literalness.
-- **Names.** Product names (Anthropic, Claude, OpenAI) stay in their original Latin script in Japanese, or take the established katakana only where that is the conventional form.
-  Person names stay as themselves; transliterate only when that is the clear convention.
+- **Technical terms.** Use the term a practitioner in the target language actually uses: sometimes the borrowed English loanword, sometimes the established native equivalent. Accuracy for the domain reader beats dictionary literalness.
+- **Names.** Product names (Anthropic, Claude, OpenAI) stay in their original Latin script in Japanese, or take the established katakana only where that is the conventional form. Person names stay as themselves; transliterate only when that is the clear convention.
 - **Speaker labels.** Preserve `Alice:`, `Speaker 1:`, etc. — they carry attribution.
 
 ## Format: `--format txt`

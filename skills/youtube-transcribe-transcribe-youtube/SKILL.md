@@ -61,8 +61,7 @@ Write the Markdown with the Write tool. Then print `wrote <md-path>`.
 
 After writing the Markdown, offer:
 
-> Translation available: run `/connect0459-agent-skills:youtube-transcribe-translate <md-path> --to ja`
-> for a Japanese version, or `--to en` for English.
+> Translation available: run `/connect0459-agent-skills:youtube-transcribe-translate <md-path> --to ja` for a Japanese version, or `--to en` for English.
 
 Do not start the translation automatically — the user decides.
 

@@ -35,18 +35,12 @@ Defaults:
 
 The script runs these steps in order. Each step prints a `==> step name` header.
 
-1. **Prerequisite check.** Verifies `cargo`, `cmake`, `clang`, `ffmpeg`, and `yt-dlp` are on PATH.
-   Exits with install hints if any are missing.
-2. **Build.** Runs `cargo build --release` in `src/whisper-transcribe/`.
-   Skipped when the installed binary is newer than all source files (idempotent).
-   Copies `target/release/whisper-transcribe` to `~/.local/bin/`.
-3. **Model download.** Downloads `ggml-<model>.bin` from HuggingFace via `curl`.
-   Skipped when the model file already exists.
+1. **Prerequisite check.** Verifies `cargo`, `cmake`, `clang`, `ffmpeg`, and `yt-dlp` are on PATH. Exits with install hints if any are missing.
+2. **Build.** Runs `cargo build --release` in `src/whisper-transcribe/`. Skipped when the installed binary is newer than all source files (idempotent). Copies `target/release/whisper-transcribe` to `~/.local/bin/`.
+3. **Model download.** Downloads `ggml-<model>.bin` from HuggingFace via `curl`. Skipped when the model file already exists.
 4. **Smoke tests.** Always run — verifies the install produces correct output, not just that it built.
-   - **English**: fetches `samples/jfk.wav` from the whisper.cpp upstream repository;
-     checks transcript contains `ask` and `country`.
-   - **Japanese**: generates a clip via `say -v Kyoko` and converts with `ffmpeg`;
-     checks transcript contains `天気` and `明日`.
+   - **English**: fetches `samples/jfk.wav` from the whisper.cpp upstream repository; checks transcript contains `ask` and `country`.
+   - **Japanese**: generates a clip via `say -v Kyoko` and converts with `ffmpeg`; checks transcript contains `天気` and `明日`.
 
 ## Prerequisites
 
