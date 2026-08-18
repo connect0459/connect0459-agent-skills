@@ -10,9 +10,7 @@ description: >-
 
 # whisper-transcribe-transcribe
 
-Internal transcription backend. Wraps the `~/.local/bin/whisper-transcribe` binary built by
-`/connect0459-agent-skills:whisper-transcribe-setup`. Not intended for direct user invocation —
-called by `/connect0459-agent-skills:youtube-transcribe-local`.
+Internal transcription backend. Wraps the `~/.local/bin/whisper-transcribe` binary built by `/connect0459-agent-skills:whisper-transcribe-setup`. Not intended for direct user invocation — called by `/connect0459-agent-skills:youtube-transcribe-local`.
 
 ## CLI
 
@@ -31,10 +29,8 @@ whisper-transcribe <input.wav>
 - Model must exist at `~/.local/share/whisper-transcribe/models/ggml-<model>.bin`.
 - For `--format srt|vtt|json`: writes `<prefix>.<ext>` and prints `wrote <path>`.
 - For `--format txt`: writes plain transcript to stdout.
-- GPU auto-detection: CPU inside Claude Code sandbox (`SANDBOX_RUNTIME=1` or
-  `CODEX_SANDBOX=seatbelt`), GPU otherwise. Override with `--gpu` or `--no-gpu`.
+- GPU auto-detection: CPU inside Claude Code sandbox (`SANDBOX_RUNTIME=1` or `CODEX_SANDBOX=seatbelt`), GPU otherwise. Override with `--gpu` or `--no-gpu`.
 
 ## Missing install
 
-If the binary or model is missing, the binary exits with a hint to run
-`/connect0459-agent-skills:whisper-transcribe-setup`.
+If the binary or model is missing, the binary exits with a hint to run `/connect0459-agent-skills:whisper-transcribe-setup`.

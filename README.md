@@ -51,14 +51,11 @@ connect0459-agent-skills/
 
 ## Development
 
-See [`AGENTS.md`](./AGENTS.md) for agent workflow conventions (adding a skill, local testing) and
-[`CONTRIBUTING.md`](./CONTRIBUTING.md) for the human contributor workflow, including commit and
-branch conventions.
+See [`AGENTS.md`](./AGENTS.md) for agent workflow conventions (adding a skill, local testing) and [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the human contributor workflow, including commit and branch conventions.
 
 ## Contributing
 
-Contributions are welcome. Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) and follow the
-[`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
+Contributions are welcome. Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) and follow the [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
 
 ## Security
 

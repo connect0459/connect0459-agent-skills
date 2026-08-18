@@ -31,8 +31,7 @@ It is difficult to review without knowing the specifications and background.
 - [ ] Breaking changes (describe below)
 
 <!--
-If this changes a skill's invocation name or frontmatter, describe what
-breaks for existing users and why the breakage is justified.
+If this changes a skill's invocation name or frontmatter, describe what breaks for existing users and why the breakage is justified.
 -->
 
 ## Deferred Items and TODOs

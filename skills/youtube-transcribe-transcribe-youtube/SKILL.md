@@ -15,8 +15,7 @@ context: fork
 
 # youtube-transcribe-transcribe-youtube
 
-Full YouTube → SRT → Markdown pipeline, running in a forked context so large transcript
-artifacts stay out of the calling session's prompt cache.
+Full YouTube → SRT → Markdown pipeline, running in a forked context so large transcript artifacts stay out of the calling session's prompt cache.
 
 ## Script
 
@@ -24,8 +23,7 @@ artifacts stay out of the calling session's prompt cache.
 <skill-path>/scripts/transcribe-youtube <youtube-url> [--language CODE] [--model NAME]
 ```
 
-The script handles audio download and SRT generation. You (Claude) handle the SRT → Markdown
-conversion and offer translation.
+The script handles audio download and SRT generation. You (Claude) handle the SRT → Markdown conversion and offer translation.
 
 ## Workflow
 
@@ -78,5 +76,4 @@ Both files are durable artifacts on disk:
 ## Running inside the Claude Code sandbox
 
 `whisper-transcribe` auto-detects the sandbox via `SANDBOX_RUNTIME=1` and falls back to CPU mode.
-CPU transcription is 5–10× slower than Metal; a 30-minute talk takes ~5–10 minutes. The fork
-handles this blocking wait — the parent session is unblocked while the fork runs.
+CPU transcription is 5–10× slower than Metal; a 30-minute talk takes ~5–10 minutes. The fork handles this blocking wait — the parent session is unblocked while the fork runs.
