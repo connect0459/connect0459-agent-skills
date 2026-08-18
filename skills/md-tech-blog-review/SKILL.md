@@ -32,8 +32,7 @@ Internally assess before reviewing:
 
 - **Target reader**: Who is this for? What experience level? What are they trying to solve or learn?
 - **Core value**: What one thing will the reader take away?
-- **Reader transformation**: After reading, what will the reader say or do differently?
-  Map intuitively to: あるある / なるほどね / それだわ / だよね / たしかに / 興味深っ
+- **Reader transformation**: After reading, what will the reader say or do differently? Map intuitively to: あるある / なるほどね / それだわ / だよね / たしかに / 興味深っ
 - **Unique angle**: What makes this distinctly the author's perspective — not just a summary of docs?
 
 Use this analysis to sharpen feedback. Do not include these labels in the output.
@@ -55,8 +54,7 @@ If a risk is detected: describe the concern in plain language (without using the
 - Does the conclusion answer "so what should I do with this?"
 - Is there a clear before/after — what does the reader know or feel differently after reading?
 - If the ending is vague, flag it as MUST.
-- If the article motivates a problem in abstract system terms, could it land harder by grounding it in a concrete persona's experience (e.g. "a user hitting this with no prior context")?
-  Concrete pain points are more persuasive than a purely architectural framing.
+- If the article motivates a problem in abstract system terms, could it land harder by grounding it in a concrete persona's experience (e.g. "a user hitting this with no prior context")? Concrete pain points are more persuasive than a purely architectural framing.
 
 ### Step 3: Technical Accuracy (Pillar 2)
 
@@ -83,8 +81,7 @@ If a risk is detected: describe the concern in plain language (without using the
 
 - Redundant phrases or repetitions that add no meaning?
 - Awkward or unnatural phrasing that may distract the reader?
-- Is the author's personal voice preserved? Do NOT correct casual or quirky expressions
-  that give the post its character — praise them instead.
+- Is the author's personal voice preserved? Do NOT correct casual or quirky expressions that give the post its character — praise them instead.
 - Expressions that could be misread unintentionally?
 
 ## Output Format

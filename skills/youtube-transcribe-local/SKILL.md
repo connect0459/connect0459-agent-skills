@@ -43,8 +43,7 @@ Options:
 1. Verify `~/.local/bin/whisper-transcribe` and the model exist; exit early with a setup hint if not.
 2. ffmpeg: transcode input → 16 kHz mono PCM WAV (temp file, deleted on exit).
 3. Run `whisper-transcribe` on the WAV.
-4. For `--format srt|vtt|json`: write `<output-prefix>.<ext>` and print `wrote <path>`.
-   For `--format txt`: stream plain transcript to stdout.
+4. For `--format srt|vtt|json`: write `<output-prefix>.<ext>` and print `wrote <path>`. For `--format txt`: stream plain transcript to stdout.
 
 ## When to use this skill
 

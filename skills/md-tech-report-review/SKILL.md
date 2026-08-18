@@ -35,8 +35,7 @@ Internally assess before reviewing:
 - **Primary audience**: Who will read this? What are they trying to evaluate?
 - **Core claim**: What is the author asserting they accomplished? Is this substantiated?
 - **Structural gaps**: Which expected sections are missing, thin, or out of logical order?
-- **Evidence audit**: Where are design decisions made without justification?
-  Where are results vague, unquantified, or incomparable?
+- **Evidence audit**: Where are design decisions made without justification? Where are results vague, unquantified, or incomparable?
 
 Use this to prioritize feedback — surface the highest-impact issues first.
 
@@ -71,12 +70,11 @@ Check:
 
 - Are design decisions explained with rationale — not just "we chose X"?
 - Were alternatives considered and compared, even briefly?
-- Are results quantified where possible?
-  ("Reduced processing time by 40%" not "became faster")
+- Are results quantified where possible? ("Reduced processing time by 40%" not "became faster")
 - Are before/after comparisons present for the claimed improvements?
 - Does the document show engineering judgment, not just execution facts?
 - Are claims internally consistent — no contradictions between sections?
-- When a decision has multiple supporting reasons, is the primary driver (e.g. product/UX/ business judgment) distinguished from secondary supporting reasons (e.g. a technical constraint)? Framing a technical limitation as the sole reason undersells the judgment actually made — check which reason is doing the real work and make sure the report says so.
+- When a decision has multiple supporting reasons, is the primary driver (e.g. product/UX/business judgment) distinguished from secondary supporting reasons (e.g. a technical constraint)? Framing a technical limitation as the sole reason undersells the judgment actually made — check which reason is doing the real work and make sure the report says so.
 - Are constraints (data model differences, external system limits, etc.) introduced before the decisions that depend on them, so the reader already has the context by the time the decision is explained? A decision explained first and justified by a constraint revealed only later forces the reader to backtrack.
 - Are alternative-design comparisons kept only where they materially change the reader's assessment of the work? A comparison with low evaluation "payoff" is better cut or condensed to a single sentence than given its own subsection.
 - Are estimated or extrapolated figures (projections, assumed multipliers) clearly labeled and distinguished from directly measured results? Prefer the real observed figure over a speculative projection; flag any unlabeled estimate presented as if it were measured.
