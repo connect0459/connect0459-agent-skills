@@ -14,6 +14,18 @@ description: >
 
 Generate a draft PR body for the current branch, write it to `.connect0459/gh-pr-draft.md`, then ask the user whether to create a GitHub Draft PR from it.
 
+## Multiple repositories
+
+When this skill runs across more than one repository in the same request:
+
+1. **Ask up front, before drafting anything.** Use AskUserQuestion to ask whether the user wants:
+   - **One repo at a time** — draft, confirm, and create the Draft PR for a single repository before moving to the next.
+   - **Batch** — write every repository's draft first, then create all the Draft PRs together once the drafts are approved.
+
+   Carry out the rest of this process in whichever mode the user picks.
+
+2. **Always `cd` into the target repository's directory explicitly** immediately before any git/gh command tied to a specific repository — this includes Step 1.3 (branch changes), Step 6's branch/upstream check, `git push`, and `gh pr create`. Never assume the shell's working directory carried over from a previous command: parallel Bash tool calls in the same turn share one persistent shell, so a `cd` issued for one repository can leak into a sibling call meant for another, silently running branch/push/PR operations against the wrong repo. Prefix each command with `cd <repo-path> &&`, and when repo-scoped commands must run back-to-back, issue them sequentially rather than in parallel.
+
 ## Process
 
 ### Step 1: Gather context
@@ -114,6 +126,8 @@ Then ask in the user's language. Examples:
 Wait for the user's response before proceeding.
 
 ### Step 6: Create the Draft PR (if the user chose option 1 or 2)
+
+**If multiple repositories are in play, `cd` into this repository's directory explicitly before running any command below** (see "Multiple repositories" above).
 
 **First, check that the branch is pushed to the remote:**
 
