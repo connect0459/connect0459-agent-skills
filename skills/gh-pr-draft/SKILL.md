@@ -32,13 +32,21 @@ When this skill runs across more than one repository in the same request:
 
 Run these in parallel:
 
-1. **Recent PR style** — fetch the last 5 closed/merged PRs and read their bodies:
+1. **Recent PR style** — learn from PRs in this repository, prioritized as follows:
 
-   ```bash
-   gh pr list --state merged --limit 5 --json number,title,body
-   ```
+   a. **Your own merged/closed PRs** (up to 5) — the primary style guide:
 
-   Study the tone, section headers, level of detail, and what the user consistently includes or omits. This is the primary style guide.
+      ```bash
+      gh pr list --state merged --author "@me" --limit 5 --json number,title,body
+      ```
+
+   b. **If (a) returned zero PRs, or fewer than 5**, also fetch merged/closed PRs from other authors (up to 5) to supplement the sample:
+
+      ```bash
+      gh pr list --state merged --search "-author:@me" --limit 5 --json number,title,body
+      ```
+
+   Study the tone, section headers, level of detail, and what the user consistently includes or omits. When both samples exist, weight your own PRs more heavily — they are the stronger signal of the user's personal style.
 
 2. **PR template** — check these paths in order, use the first one found:
    - `.github/PULL_REQUEST_TEMPLATE.md`
@@ -46,6 +54,8 @@ Run these in parallel:
    - `docs/PULL_REQUEST_TEMPLATE.md`
    - `PULL_REQUEST_TEMPLATE.md`
    - `.github/PULL_REQUEST_TEMPLATE/` (directory — use the first `.md` file inside)
+
+   If none of these exist **and** step 1a/1b together returned zero PRs (the repository has no PR history at all), fall back to this skill's own default template at `skills/gh-pr-draft/templates/PULL_REQUEST_TEMPLATE.md`. It encodes the user's general PR style, distilled from their other repositories, for use when a repository has no style of its own to learn from yet.
 
 3. **Branch changes** — understand what was done:
 
@@ -70,9 +80,9 @@ Types: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `ci`, `perf`
 
 ### Step 3: Write the draft
 
-**If a PR template exists**: fill it in. Follow its structure exactly. The template defines what the author expects reviewers to read — respect that.
+**If a PR template exists** (repo-specific or the skill's own default from Step 1.2): fill it in. Follow its structure exactly. The template defines what the author expects reviewers to read — respect that.
 
-**If no template**: mirror the structure and length of the user's recent PRs. If their PRs typically have 3 bullet points, write 3 bullet points. If they write a short paragraph, write a short paragraph. Don't over-engineer what is usually concise.
+**If no template applies, but recent PRs were found in Step 1**: mirror the structure and length of the user's recent PRs. If their PRs typically have 3 bullet points, write 3 bullet points. If they write a short paragraph, write a short paragraph. Don't over-engineer what is usually concise.
 
 **Evergreen writing rule**: write at the level of *intent and behavior*, not implementation detail.
 
