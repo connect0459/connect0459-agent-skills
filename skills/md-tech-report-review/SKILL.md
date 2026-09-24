@@ -102,7 +102,8 @@ Check:
 ### Step 5: Clarity & Expression (Pillar 5)
 
 - Is the writing clear and professional in tone?
-- Are overly long or convoluted sentences present? Suggest splitting.
+- Are overly long or convoluted sentences present — ones where the reader loses track of the subject or clause structure? Suggest splitting only when comprehension is actually impaired, not for length alone; a long sentence that stays trackable in one pass does not need to be cut.
+- Does a single paragraph contain 4+ short sentences in a row, each closed with 句点? Mechanical over-splitting produces a choppy, staccato rhythm that is harder to read than one well-constructed longer sentence — flag this and suggest consolidating or varying sentence length.
 - Is terminology consistent — no synonym drift for the same concept?
 - Are there ambiguous pronouns or dropped subjects that create confusion?
 - Are headings informative enough to orient a skim reader?
