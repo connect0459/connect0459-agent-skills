@@ -72,7 +72,8 @@ If a risk is detected: describe the concern in plain language (without using the
 - Does the article follow a causal order (problem → why this approach → result) rather than a chronological "what I did, in the order I did it" listing? A chronological structure reads as a log of accomplishments, not an argument the reader can follow.
 - For unfamiliar systems/services, is there a concept or relationship diagram before detailed flows are described? Prose-only descriptions of multi-component interactions are hard to follow without a visual anchor.
 - Are headings descriptive enough for a skim reader to understand the outline?
-- Are sentences over ~50 characters long? Suggest splitting where helpful.
+- Are sentences over ~50 characters long AND hard to parse in one pass (ambiguous scope, multiple stacked clauses)? Suggest splitting only when length is actually hurting comprehension — a long sentence that reads naturally in one breath does not need splitting just because it crosses a character count.
+- Does a single paragraph contain 4+ short sentences in a row, each closed with 句点? Mechanical over-splitting produces a choppy, staccato rhythm that is harder to read than one well-constructed longer sentence — flag this and suggest merging some of them back or varying sentence length.
 - Missing particles (助詞: を・が・は・に・で)?
 - Sentences ending with commas? Suggest splitting into two sentences.
 - Inconsistent terminology for the same concept?
