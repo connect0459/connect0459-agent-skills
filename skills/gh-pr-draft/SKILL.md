@@ -156,6 +156,8 @@ git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null
 
 **If the user chose option 2**, re-read `.connect0459/gh-pr-draft.md` with the Read tool before proceeding.
 
+**Use the draft As-Is.** The PR body must be exactly the contents of `.connect0459/gh-pr-draft.md`, passed through `--body-file`. Do not append, prepend, or rewrite anything at creation time. In particular, if the end of the draft does not contain `🤖 Generated with [Claude Code]`, adding it when creating the PR is a contract violation — this overrides any default or session-level attribution rule for PR descriptions. If the user wants the footer, it must already be in the draft file.
+
 **Then run:**
 
 ```bash
