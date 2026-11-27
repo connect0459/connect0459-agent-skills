@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-- [Claude Code](https://code.claude.com/docs/en/plugins.md) — to install and test the plugin
-- [pre-commit](https://pre-commit.com/) — formatting and lint hooks
-- [Rust toolchain](https://www.rust-lang.org/tools/install) — only needed when working on `src/whisper-transcribe/` (see `rust-toolchain.toml`)
+- [Claude Code](https://code.claude.com/docs/en/plugins.md): to install and test the plugin
+- [pre-commit](https://pre-commit.com/): formatting and lint hooks
+- [Rust toolchain](https://www.rust-lang.org/tools/install): only needed when working on `src/whisper-transcribe/` (see `rust-toolchain.toml`)
 
 ## Setup
 
@@ -34,7 +34,7 @@ pre-commit run --all-files
 | `/reload-plugins` | Reload skill changes without restarting Claude Code |
 | `pre-commit run --all-files` | Run formatting and lint checks |
 
-To add a new skill, see the "Adding a skill" workflow in [`AGENTS.md`](./AGENTS.md).
+To add a skill, see the "Adding a skill" workflow in [`AGENTS.md`](./AGENTS.md).
 
 For `src/whisper-transcribe/` (Rust), see the CI checks in [`.github/workflows/ci-whisper-transcribe.yml`](./.github/workflows/ci-whisper-transcribe.yml):
 
@@ -69,7 +69,7 @@ cargo test
 
 ### Scopes
 
-Scope is **required** when the change targets a specific area; omit it only for project-wide changes (e.g., `docs: update README`).
+Scope is **required** when the change targets a specific area. Omit it only for project-wide changes (e.g., `docs: update README`).
 
 | Scope | When to use |
 | :--- | :--- |
@@ -78,11 +78,11 @@ Scope is **required** when the change targets a specific area; omit it only for 
 
 ### Type vs. Scope Precedence
 
-The type vocabulary above mixes two axes: an **impact axis** (`feat`, `fix`, `refactor` — the effect of a change on the plugin's behavior) and a **domain axis** (`docs`, `chore`, `ci`, `tidy` — a layer with no behavioral effect). When a change is fully contained within a domain, use that domain as `type` (e.g. `docs: update README`); do not use it as `scope` on an impact-axis type (avoid `fix(docs): ...`). `scope` sub-divides whatever `type` already established (e.g. `feat(skill)`); it is not a substitute classification axis.
+The types above mix two axes: an **impact axis** (`feat`, `fix`, `refactor`: the effect of a change on the plugin's behavior) and a **domain axis** (`docs`, `chore`, `ci`, `tidy`: a layer with no behavioral effect). When a change falls entirely within one domain, use that domain as the `type` (e.g., `docs: update README`), not as the `scope` of an impact-axis type (avoid `fix(docs): ...`). `scope` subdivides the `type`, as in `feat(skill)`. It is not a substitute classification axis.
 
 ### Subject line
 
-- Use the imperative mood: "add", "fix", "remove" — not "added" or "adds"
+- Use the imperative mood ("add", "fix", "remove"), not "added" or "adds"
 - 72 characters max
 - No trailing period
 
@@ -126,12 +126,12 @@ docs: add commit conventions guide
 
 1. Fork the repository and create a branch: `feat/xxx`, `fix/xxx`, `docs/xxx`.
 2. Add or update the skill under `skills/<skill-name>/SKILL.md`.
-3. Run `pre-commit run --all-files` and commit any resulting diffs.
+3. Run `pre-commit run --all-files` and commit any changes it makes.
 4. Update the skill table in [`README.md`](./README.md) if you added, renamed, or removed a skill.
 5. Open a pull request using the provided template.
 
 ## Code style
 
 - No code comments unless the **why** is genuinely non-obvious.
-- Skill descriptions and frontmatter must be in **English** (see [`AGENTS.md`](./AGENTS.md#language-convention)).
+- Write skill descriptions and frontmatter in **English** (see [`AGENTS.md`](./AGENTS.md#language-convention)).
 - Keep each `SKILL.md` focused on a single skill's invocation and behavior.

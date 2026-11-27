@@ -22,7 +22,7 @@ about: Request a new feature or enhancement
 
 ## Requirements and Specifications
 
-- Describe the behaviour that needs to be implemented (e.g. invocation phrasing, expected output).
+- Describe the behavior that needs to be implemented (e.g. invocation phrasing, expected output).
 - Details do not need to be final at first; please update as decisions are made.
 
 ## Affected Skill
